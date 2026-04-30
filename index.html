@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Steam, Over Time — CMSC471 Final Project</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/scrollama"></script>
+</head>
+<body>
+  <header class="hero">
+    <h1>Steam, Over Time</h1>
+    <p class="subtitle">
+      A scrollytelling tour of how the world's biggest game store has changed in twenty years.
+    </p>
+    <p class="tag">Working title — to be locked in Phase 0.</p>
+  </header>
+
+  <main id="scenes">
+    <section class="scene" data-scene="placeholder">
+      <div class="scene__sticky">
+        <div class="scene__viz" id="viz-placeholder">
+          (waiting on data fetch&hellip;)
+        </div>
+      </div>
+      <div class="scene__steps">
+        <div class="step">
+          <p>
+            Phase 0 placeholder. The smoke-test fetch result is shown above and logged to the
+            developer console. Real scenes go here once the data pipeline is wired up.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      Data:
+      <a href="https://www.kaggle.com/datasets/fronkongames/steam-games-dataset">fronkongames/steam-games-dataset</a>
+      (CC&nbsp;BY&nbsp;4.0), based on Steam &amp; SteamSpy.
+      Built with <a href="https://d3js.org/">D3.js</a> and
+      <a href="https://github.com/russellsamora/scrollama">Scrollama</a>.
+    </p>
+    <p>CMSC471, University of Maryland, Spring 2026 &mdash; Group 13.</p>
+  </footer>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+CLAUDE.md
+.env
+plan.md
+FP Proposal - Group 13.txt
+
+# raw CSV + intermediate files — too big to commit
+raw_data/
+
+# node deps — pipeline reinstalls from scripts/package.json
+node_modules/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
