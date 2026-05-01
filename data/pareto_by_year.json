@@ -1,0 +1,163 @@
+[
+  {
+    "year": 2004,
+    "total_releases": 6,
+    "total_owners": 71000000,
+    "top10_owners": 71000000,
+    "top10_share": 1
+  },
+  {
+    "year": 2005,
+    "total_releases": 7,
+    "total_owners": 36970000,
+    "top10_owners": 36970000,
+    "top10_share": 1
+  },
+  {
+    "year": 2006,
+    "total_releases": 69,
+    "total_owners": 82685000,
+    "top10_owners": 66500000,
+    "top10_share": 0.8042571203966862
+  },
+  {
+    "year": 2007,
+    "total_releases": 90,
+    "total_owners": 160900000,
+    "top10_owners": 118000000,
+    "top10_share": 0.7333747669359851
+  },
+  {
+    "year": 2008,
+    "total_releases": 156,
+    "total_owners": 72565000,
+    "top10_owners": 33000000,
+    "top10_share": 0.45476469372286915
+  },
+  {
+    "year": 2009,
+    "total_releases": 317,
+    "total_owners": 203835000,
+    "top10_owners": 114500000,
+    "top10_share": 0.5617288493143965
+  },
+  {
+    "year": 2010,
+    "total_releases": 254,
+    "total_owners": 139255000,
+    "top10_owners": 54500000,
+    "top10_share": 0.3913683530214355
+  },
+  {
+    "year": 2011,
+    "total_releases": 258,
+    "total_owners": 206635000,
+    "top10_owners": 78500000,
+    "top10_share": 0.3798969196893072
+  },
+  {
+    "year": 2012,
+    "total_releases": 320,
+    "total_owners": 392820000,
+    "top10_owners": 220500000,
+    "top10_share": 0.5613257980754544
+  },
+  {
+    "year": 2013,
+    "total_releases": 465,
+    "total_owners": 602705000,
+    "top10_owners": 342500000,
+    "top10_share": 0.5682713765440804
+  },
+  {
+    "year": 2014,
+    "total_releases": 1518,
+    "total_owners": 482825000,
+    "top10_owners": 102500000,
+    "top10_share": 0.21229223838865013
+  },
+  {
+    "year": 2015,
+    "total_releases": 2511,
+    "total_owners": 739920000,
+    "top10_owners": 242500000,
+    "top10_share": 0.3277381338523084
+  },
+  {
+    "year": 2016,
+    "total_releases": 4124,
+    "total_owners": 769145000,
+    "top10_owners": 175000000,
+    "top10_share": 0.22752536907865226
+  },
+  {
+    "year": 2017,
+    "total_releases": 5897,
+    "total_owners": 973715000,
+    "top10_owners": 395000000,
+    "top10_share": 0.4056628479585916
+  },
+  {
+    "year": 2018,
+    "total_releases": 7425,
+    "total_owners": 699355000,
+    "top10_owners": 195000000,
+    "top10_share": 0.2788283489787018
+  },
+  {
+    "year": 2019,
+    "total_releases": 7204,
+    "total_owners": 593150000,
+    "top10_owners": 132500000,
+    "top10_share": 0.22338362977324455
+  },
+  {
+    "year": 2020,
+    "total_releases": 8654,
+    "total_owners": 887745000,
+    "top10_owners": 295000000,
+    "top10_share": 0.33230263194949
+  },
+  {
+    "year": 2021,
+    "total_releases": 10281,
+    "total_owners": 723600000,
+    "top10_owners": 180000000,
+    "top10_share": 0.24875621890547264
+  },
+  {
+    "year": 2022,
+    "total_releases": 11270,
+    "total_owners": 724870000,
+    "top10_owners": 252500000,
+    "top10_share": 0.34833832273373155
+  },
+  {
+    "year": 2023,
+    "total_releases": 13172,
+    "total_owners": 592230000,
+    "top10_owners": 145000000,
+    "top10_share": 0.24483730982895158
+  },
+  {
+    "year": 2024,
+    "total_releases": 17876,
+    "total_owners": 801535000,
+    "top10_owners": 315000000,
+    "top10_share": 0.3929959390419632
+  },
+  {
+    "year": 2025,
+    "total_releases": 21564,
+    "total_owners": 421095000,
+    "top10_owners": 140500000,
+    "top10_share": 0.3336539260736888
+  },
+  {
+    "year": 2026,
+    "total_releases": 84,
+    "total_owners": 20000,
+    "top10_owners": 20000,
+    "top10_share": 1
+  }
+]

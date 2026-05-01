@@ -1,0 +1,163 @@
+[
+  {
+    "year": 2004,
+    "total": 6,
+    "with_dlc": 1,
+    "share_with_dlc": 0.16666666666666666,
+    "avg_dlc_count": 0.16666666666666666
+  },
+  {
+    "year": 2005,
+    "total": 7,
+    "with_dlc": 0,
+    "share_with_dlc": 0,
+    "avg_dlc_count": 0
+  },
+  {
+    "year": 2006,
+    "total": 69,
+    "with_dlc": 5,
+    "share_with_dlc": 0.07246376811594203,
+    "avg_dlc_count": 0.11594202898550725
+  },
+  {
+    "year": 2007,
+    "total": 90,
+    "with_dlc": 6,
+    "share_with_dlc": 0.06666666666666667,
+    "avg_dlc_count": 0.16666666666666666
+  },
+  {
+    "year": 2008,
+    "total": 156,
+    "with_dlc": 7,
+    "share_with_dlc": 0.04487179487179487,
+    "avg_dlc_count": 0.19230769230769232
+  },
+  {
+    "year": 2009,
+    "total": 317,
+    "with_dlc": 30,
+    "share_with_dlc": 0.0946372239747634,
+    "avg_dlc_count": 0.3438485804416404
+  },
+  {
+    "year": 2010,
+    "total": 254,
+    "with_dlc": 41,
+    "share_with_dlc": 0.16141732283464566,
+    "avg_dlc_count": 0.6299212598425197
+  },
+  {
+    "year": 2011,
+    "total": 258,
+    "with_dlc": 76,
+    "share_with_dlc": 0.29457364341085274,
+    "avg_dlc_count": 1.2364341085271318
+  },
+  {
+    "year": 2012,
+    "total": 320,
+    "with_dlc": 113,
+    "share_with_dlc": 0.353125,
+    "avg_dlc_count": 3.28125
+  },
+  {
+    "year": 2013,
+    "total": 465,
+    "with_dlc": 153,
+    "share_with_dlc": 0.32903225806451614,
+    "avg_dlc_count": 1.9655913978494624
+  },
+  {
+    "year": 2014,
+    "total": 1518,
+    "with_dlc": 352,
+    "share_with_dlc": 0.2318840579710145,
+    "avg_dlc_count": 2.354413702239789
+  },
+  {
+    "year": 2015,
+    "total": 2511,
+    "with_dlc": 643,
+    "share_with_dlc": 0.25607327757865395,
+    "avg_dlc_count": 2.8510553564317007
+  },
+  {
+    "year": 2016,
+    "total": 4124,
+    "with_dlc": 888,
+    "share_with_dlc": 0.21532492725509214,
+    "avg_dlc_count": 0.5761396702230844
+  },
+  {
+    "year": 2017,
+    "total": 5897,
+    "with_dlc": 1040,
+    "share_with_dlc": 0.17636086145497712,
+    "avg_dlc_count": 0.5501102255384094
+  },
+  {
+    "year": 2018,
+    "total": 7425,
+    "with_dlc": 1279,
+    "share_with_dlc": 0.17225589225589225,
+    "avg_dlc_count": 0.5862626262626263
+  },
+  {
+    "year": 2019,
+    "total": 7204,
+    "with_dlc": 1195,
+    "share_with_dlc": 0.16588006662965019,
+    "avg_dlc_count": 0.8310660744031094
+  },
+  {
+    "year": 2020,
+    "total": 8654,
+    "with_dlc": 1536,
+    "share_with_dlc": 0.17749017795239197,
+    "avg_dlc_count": 1.044256990986827
+  },
+  {
+    "year": 2021,
+    "total": 10281,
+    "with_dlc": 1718,
+    "share_with_dlc": 0.16710436727944752,
+    "avg_dlc_count": 0.4839023441299484
+  },
+  {
+    "year": 2022,
+    "total": 11270,
+    "with_dlc": 1753,
+    "share_with_dlc": 0.15554569653948536,
+    "avg_dlc_count": 0.5089618456078083
+  },
+  {
+    "year": 2023,
+    "total": 13172,
+    "with_dlc": 1919,
+    "share_with_dlc": 0.14568782265411478,
+    "avg_dlc_count": 0.3947767992711813
+  },
+  {
+    "year": 2024,
+    "total": 17876,
+    "with_dlc": 2411,
+    "share_with_dlc": 0.13487357350637727,
+    "avg_dlc_count": 0.3905236070709331
+  },
+  {
+    "year": 2025,
+    "total": 21564,
+    "with_dlc": 2518,
+    "share_with_dlc": 0.11676868855499907,
+    "avg_dlc_count": 0.25839361899462066
+  },
+  {
+    "year": 2026,
+    "total": 84,
+    "with_dlc": 2,
+    "share_with_dlc": 0.023809523809523808,
+    "avg_dlc_count": 0.023809523809523808
+  }
+]

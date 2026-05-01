@@ -1,8 +1,11 @@
-// One-off: read the first few rows of games.csv and dump the columns around
-// where Saxon suspects Reviews and Supported languages are swapped.
+// Debug script — confirms the games.csv header bug (39-col header vs 40-col data rows).
+// See plan.md "CSV header bug". Kept for reference; not part of the build.
 import { open } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const CSV_PATH = 'C:/Users/saxon/Downloads/Steam Datasets/Steam Games/games.csv';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const CSV_PATH = join(__dirname, '..', 'raw_data', 'games.csv');
 
 const fd = await open(CSV_PATH);
 const buf = Buffer.alloc(120_000);

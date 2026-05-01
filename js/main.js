@@ -1,7 +1,5 @@
-// Phase 0 entry point. Verifies the static-hosting pipeline:
-//   - CDN globals (d3, scrollama) loaded
-//   - relative fetch from ./data/ works
-// Real scrollama wiring + scene controllers come in Phase 1.
+// End-of-Phase-0 entry point. Verifies CDN globals and a real data fetch.
+// Real scrollama wiring + scene controllers land in Phase 1.
 
 const log = (...args) => console.log("[main]", ...args);
 
@@ -11,12 +9,18 @@ log("scrollama:", typeof scrollama !== "undefined" ? "loaded" : "NOT LOADED");
 const target = document.getElementById("viz-placeholder");
 
 try {
-  const data = await fetch("./data/placeholder.json").then((r) => {
+  const releasesByYear = await fetch("./data/releases_per_year.json").then((r) => {
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     return r.json();
   });
-  log("placeholder data:", data);
-  if (target) target.textContent = `fetch ok — ${data.message}`;
+  const totalReleases = releasesByYear.reduce((sum, r) => sum + r.count, 0);
+  const yearSpan = `${releasesByYear[0].year}–${releasesByYear[releasesByYear.length - 1].year}`;
+  log("releases per year loaded:", releasesByYear.length, "rows,", totalReleases, "games");
+  if (target) {
+    target.textContent =
+      `loaded ${releasesByYear.length} years (${yearSpan}), ` +
+      `${totalReleases.toLocaleString()} total releases tracked`;
+  }
 } catch (err) {
   log("fetch failed:", err);
   if (target) target.textContent = `fetch failed: ${err.message}`;

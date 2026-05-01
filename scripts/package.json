@@ -1,0 +1,13 @@
+{
+  "name": "steam-flood-pipeline",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Offline Node pipeline: parses raw_data/games.csv against the corrected 40-column schema and emits pre-aggregated JSONs into ../data/ for the browser to fetch. Also writes ../phase0-report.md.",
+  "scripts": {
+    "build": "node --max-old-space-size=4096 build.js"
+  },
+  "dependencies": {
+    "d3": "^7.9.0"
+  }
+}
