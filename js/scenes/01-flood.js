@@ -162,6 +162,20 @@ function createChart(host, tooltip, data) {
   // Hatch overlay sits above the bars; updated on mode change so it tracks bar tops.
   const hatchGroup = g.append("g").attr("class", "hatch-overlay");
 
+  // Per-bar invisible hit-targets for hover tooltips. Sized to the year's full
+  // column (not just the bar) so hovering empty space above a short bar still
+  // works in counts mode. Drawn here — annotations come later and sit on top
+  // so the policy lines win in the narrow strips where they overlap.
+  const barOverlayGroup = g.append("g").attr("class", "bar-overlays");
+  const barHighlight = g
+    .append("rect")
+    .attr("class", "bar-highlight")
+    .attr("fill", "none")
+    .attr("stroke", "#1a1a1a")
+    .attr("stroke-width", 1.25)
+    .attr("pointer-events", "none")
+    .attr("display", "none");
+
   // X-axis (static — same in both modes).
   g.append("g")
     .attr("class", "axis axis--x")
@@ -291,6 +305,46 @@ function createChart(host, tooltip, data) {
       .transition(animate ? t : d3.transition().duration(0))
       .attr("y", (d) => barTopY(d, mode, yScale))
       .attr("height", (d) => innerHeight - barTopY(d, mode, yScale));
+
+    // (Re)bind the per-bar hover overlays. Their geometry (x/width/full
+    // chart height) doesn't change between modes, but their hover handlers
+    // close over `mode` so the highlight rect lands at the right bar top.
+    barOverlayGroup
+      .selectAll("rect")
+      .data(data, (d) => d.year)
+      .join(
+        (enter) =>
+          enter
+            .append("rect")
+            .attr("x", (d) => xScale(d.year))
+            .attr("y", 0)
+            .attr("width", xScale.bandwidth())
+            .attr("height", innerHeight)
+            .attr("fill", "transparent")
+            .style("cursor", "default"),
+      )
+      .on("mouseenter", (event, d) => {
+        const top = barTopY(d, mode, yScale);
+        const height = innerHeight - top;
+        if (height <= 0) return;
+        barHighlight
+          .attr("display", null)
+          .attr("x", xScale(d.year) - 1)
+          .attr("y", top - 1)
+          .attr("width", xScale.bandwidth() + 2)
+          .attr("height", height + 2);
+        showBarTooltip(
+          tooltip,
+          host,
+          xScale(d.year) + xScale.bandwidth() / 2,
+          top,
+          d,
+        );
+      })
+      .on("mouseleave", () => {
+        barHighlight.attr("display", "none");
+        hideTooltip(tooltip);
+      });
   }
 
   // Initial draw (no animation).
@@ -324,6 +378,22 @@ function barTopY(d, mode, yScale) {
 // Tooltip
 // ---------------------------------------------------------------------------
 
+// Chart-space coordinates → screen-space pixels relative to the scene__viz
+// container. The two tooltip-positioning helpers below reuse this.
+function chartToScreen(host, anchorXInChart, anchorYInChart) {
+  const chartEl = host.querySelector("svg");
+  const chartRect = chartEl.getBoundingClientRect();
+  const containerRect = host.parentElement.getBoundingClientRect();
+  const svgViewBox = chartEl.viewBox.baseVal;
+  const scale = chartRect.width / svgViewBox.width;
+  const marginLeft = 64; // matches chart.margin.left
+  const marginTop = 56; // matches chart.margin.top
+  return {
+    x: chartRect.left - containerRect.left + (marginLeft + anchorXInChart) * scale,
+    y: chartRect.top - containerRect.top + (marginTop + anchorYInChart) * scale,
+  };
+}
+
 function showTooltip(el, host, anchorXInChart, datum) {
   el.innerHTML = `
     <div class="flood-tooltip__title">${datum.label} (${datum.year})</div>
@@ -331,19 +401,38 @@ function showTooltip(el, host, anchorXInChart, datum) {
   `;
   el.hidden = false;
 
-  // Anchor the tooltip near the annotation's screen-space x position.
-  // The chart's SVG fills the chartHost width, so we proportion accordingly.
-  const chartEl = host.querySelector("svg");
-  const chartRect = chartEl.getBoundingClientRect();
-  const containerRect = host.parentElement.getBoundingClientRect();
-  const svgViewBox = chartEl.viewBox.baseVal;
-  const scale = chartRect.width / svgViewBox.width;
-  const margin = 64; // matches chart.margin.left
-  const screenX = chartRect.left - containerRect.left + (margin + anchorXInChart) * scale;
-  const screenY = chartRect.top - containerRect.top - 8;
+  const { x, y } = chartToScreen(host, anchorXInChart, -16);
+  el.style.left = `${x}px`;
+  el.style.top = `${y}px`;
+  el.style.transform = "translate(-50%, -100%)";
+}
 
-  el.style.left = `${screenX}px`;
-  el.style.top = `${screenY}px`;
+function showBarTooltip(el, host, anchorXInChart, barTopInChart, datum) {
+  // Rows in legend order (top of bar to bottom): Phenomenon → Drowned. Eye
+  // can map row position to bar segment without re-sorting.
+  const rows = [...TIERS]
+    .reverse()
+    .map((tier) => {
+      const count = datum[tier] || 0;
+      const pct = datum.total ? (count / datum.total) * 100 : 0;
+      return `
+        <span class="flood-tooltip__swatch" style="background:${TIER_COLORS[tier]}"></span>
+        <span class="flood-tooltip__row-label">${TIER_LABELS[tier]}</span>
+        <span class="flood-tooltip__row-count">${d3.format(",")(count)}</span>
+        <span class="flood-tooltip__row-pct">${pct.toFixed(1)}%</span>
+      `;
+    })
+    .join("");
+
+  el.innerHTML = `
+    <div class="flood-tooltip__title">${datum.year} — ${d3.format(",")(datum.total)} releases</div>
+    <div class="flood-tooltip__rows">${rows}</div>
+  `;
+  el.hidden = false;
+
+  const { x, y } = chartToScreen(host, anchorXInChart, barTopInChart - 8);
+  el.style.left = `${x}px`;
+  el.style.top = `${y}px`;
   el.style.transform = "translate(-50%, -100%)";
 }
 
