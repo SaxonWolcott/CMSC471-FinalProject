@@ -3,6 +3,7 @@
 // online.
 
 import { renderFlood } from "./scenes/01-flood.js";
+import { renderIndieWave } from "./scenes/02-indie-wave.js";
 
 const log = (...args) => console.log("[main]", ...args);
 
@@ -28,6 +29,15 @@ async function main() {
   if (floodHost) {
     renderFlood(floodHost, floodData);
     log("Scene 1 (Flood) rendered");
+  }
+
+  const genreData = await loadJSON("./data/genre_share_by_year.json");
+  log(`genre_share_by_year: ${genreData.byYear.length} years, ${genreData.genres.length} genres loaded`);
+
+  const indieHost = document.getElementById("scene-indie-viz");
+  if (indieHost) {
+    renderIndieWave(indieHost, genreData);
+    log("Scene 2 (Indie Wave) rendered");
   }
 }
 

@@ -270,6 +270,88 @@ a:hover { text-decoration: underline; }
   font-size: 0.8rem;
 }
 
+/* ---------- Scene 2: The Indie Wave ---------- */
+
+.indie-wave-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.indie-wave-chart .axis text {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-family: inherit;
+}
+
+.indie-wave-chart .axis-label {
+  font-size: 12px;
+  fill: var(--muted);
+}
+
+.indie-wave-chart .indie-line {
+  transition: stroke 200ms ease, stroke-width 200ms ease;
+}
+
+.indie-wave-chart .line-label {
+  font-family: inherit;
+  transition: fill 200ms ease, font-weight 200ms ease;
+}
+
+.indie-wave-chart .line-label:hover {
+  fill: var(--accent) !important;
+}
+
+.indie-wave-tooltip {
+  position: absolute;
+  z-index: 10;
+  padding: 0.6rem 0.8rem;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  pointer-events: none;
+  min-width: 200px;
+}
+
+.indie-wave-tooltip[hidden] {
+  display: none;
+}
+
+.indie-wave-tooltip__title {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 0.3rem;
+}
+
+.indie-wave-tooltip__rows {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.2rem 0.7rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+}
+
+.indie-wave-tooltip__row-name {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.indie-wave-tooltip__row-value {
+  text-align: right;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.indie-wave-tooltip__row-name.is-selected,
+.indie-wave-tooltip__row-value.is-selected {
+  color: #fff;
+  font-weight: 700;
+}
+
 /* ---------- Footer ---------- */
 
 .footer {
