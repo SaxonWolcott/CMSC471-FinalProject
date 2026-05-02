@@ -541,6 +541,40 @@ async function main() {
     );
   }
 
+  // 14. Owner-bucket tier share by year — feeds Scene 1 (The Flood). Each game lands in
+  // exactly one of five tiers based on its SteamSpy owners estimate; per-year counts add
+  // up to that year's total releases. Drowned uses owners_high (the smallest-bucket check);
+  // the others use owners_mid.
+  {
+    const TIERS = ["drowned", "niche", "modest", "hit", "phenomenon"];
+    function ownerTier(g) {
+      if (g.ownersHigh <= 20_000) return "drowned";
+      if (g.ownersMid <= 100_000) return "niche";
+      if (g.ownersMid <= 1_000_000) return "modest";
+      if (g.ownersMid <= 10_000_000) return "hit";
+      return "phenomenon";
+    }
+    const data = years.map((year) => {
+      const games = byYear.get(year) || [];
+      const counts = { drowned: 0, niche: 0, modest: 0, hit: 0, phenomenon: 0 };
+      for (const g of games) counts[ownerTier(g)]++;
+      return { year, total: games.length, ...counts };
+    });
+    await emit(
+      "tier_share_by_year.json",
+      data,
+      "14. Owner-bucket tier share by release year (Scene 1 source)",
+      ["year", "total", ...TIERS.map((t) => t)],
+      data.map((r) => [
+        r.year,
+        fmtN(r.total),
+        ...TIERS.map((t) =>
+          `${fmtN(r[t])} (${fmtPct(r.total ? r[t] / r.total : 0)})`,
+        ),
+      ]),
+    );
+  }
+
   // Write the consolidated markdown report.
   const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
   const report = [
