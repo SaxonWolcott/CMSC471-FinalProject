@@ -1,11 +1,13 @@
-/* Phase 0 scaffolding: minimal but coherent. Real type/color decisions
-   happen as a Phase 0 open question — see plan.md. */
+/* Phase 0 / Scene 1 styling. Type and palette decisions for the rest of the
+   piece will land as Scenes 2-5 come online — this file is intentionally
+   minimal so design choices stay revisitable. */
 
 :root {
   --fg: #1a1a1a;
   --bg: #fafafa;
   --muted: #6b6b6b;
-  --accent: #d24727;
+  --muted-strong: #444;
+  --accent: #2171b5;
   --border: #e6e6e6;
   --max-width: 1200px;
 }
@@ -29,6 +31,8 @@ html, body {
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/* ---------- Hero ---------- */
+
 .hero {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -50,50 +54,119 @@ a:hover { text-decoration: underline; }
   max-width: 640px;
 }
 
-.hero .tag {
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-style: italic;
-}
+/* ---------- Scene scaffold ---------- */
 
 .scene {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 4rem 1.5rem;
-  position: relative;
 }
 
-.scene__sticky {
-  position: sticky;
-  top: 2rem;
+.scene__intro {
+  max-width: 720px;
+  margin: 0 auto 2rem;
+}
+
+.scene__title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+}
+
+.scene__lead {
+  font-size: 1.1rem;
+  color: var(--muted-strong);
+  margin: 0;
 }
 
 .scene__viz {
-  width: 100%;
-  height: 70vh;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.scene__steps {
-  margin-top: 2rem;
-}
-
-.step {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.5rem;
-  max-width: 540px;
+  padding: 1.5rem 1.5rem 1rem;
   margin: 0 auto;
 }
+
+.scene__footnote {
+  max-width: 720px;
+  margin: 1.5rem auto 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- Scene 1: The Flood ---------- */
+
+.flood-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.flood-chart .axis text {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-family: inherit;
+}
+
+.flood-chart .axis-label {
+  font-size: 12px;
+  fill: var(--muted);
+}
+
+.flood-chart .annotation-label {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-weight: 500;
+}
+
+.flood-legend {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.flood-legend__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted-strong);
+  margin-bottom: 0.5rem;
+}
+
+.flood-legend__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.4rem 1rem;
+}
+
+.flood-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted-strong);
+}
+
+.flood-legend__swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.flood-legend__label {
+  font-weight: 600;
+}
+
+.flood-legend__def {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* ---------- Footer ---------- */
 
 .footer {
   max-width: var(--max-width);
