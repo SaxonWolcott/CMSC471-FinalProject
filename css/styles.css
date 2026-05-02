@@ -352,6 +352,182 @@ a:hover { text-decoration: underline; }
   font-weight: 700;
 }
 
+/* ---------- Scene 3: The Median Crashed ---------- */
+
+.median-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.median-controls__group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.median-controls__label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-right: 0.25rem;
+}
+
+.median-controls__btn {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--muted-strong);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.median-controls__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.median-controls__btn.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.median-chart svg,
+.engagement-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.median-chart .axis text,
+.engagement-chart .axis text {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-family: inherit;
+}
+
+.median-chart .axis-label,
+.engagement-chart .axis-label {
+  font-size: 12px;
+  fill: var(--muted);
+}
+
+.median-chart .annotation-label {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-weight: 500;
+}
+
+.median-chart .median-band {
+  transition: opacity 380ms ease;
+}
+
+.median-bridge {
+  margin: 1.5rem 0 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border);
+}
+
+.median-bridge__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.median-bridge__lead {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted-strong);
+  max-width: 720px;
+}
+
+/* Shared tooltip used by both Scene 3 charts. */
+.median-tooltip {
+  position: absolute;
+  z-index: 10;
+  padding: 0.6rem 0.8rem;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  pointer-events: none;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+.median-tooltip[hidden] {
+  display: none;
+}
+
+.median-tooltip__title {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 0.3rem;
+}
+
+.median-tooltip__rows {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.2rem 0.7rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+}
+
+.median-tooltip__row-label {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.median-tooltip__row-value {
+  text-align: right;
+  color: #fff;
+}
+
+.median-tooltip__examples-label {
+  margin-top: 0.6rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.median-tooltip__examples {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.15rem;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.median-tooltip__examples li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.median-tooltip__example-name {
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.median-tooltip__example-owners {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 /* ---------- Footer ---------- */
 
 .footer {

@@ -2,116 +2,185 @@
   {
     "year": 2004,
     "count": 6,
-    "median_owners": 15000000
+    "measured_count": 6,
+    "median_owners": 15000000,
+    "p25_owners": 9375000,
+    "p75_owners": 15000000
   },
   {
     "year": 2005,
     "count": 7,
-    "median_owners": 350000
+    "measured_count": 7,
+    "median_owners": 350000,
+    "p25_owners": 55000,
+    "p75_owners": 750000
   },
   {
     "year": 2006,
     "count": 69,
-    "median_owners": 150000
+    "measured_count": 69,
+    "median_owners": 150000,
+    "p25_owners": 75000,
+    "p75_owners": 750000
   },
   {
     "year": 2007,
     "count": 90,
-    "median_owners": 550000
+    "measured_count": 90,
+    "median_owners": 550000,
+    "p25_owners": 150000,
+    "p75_owners": 750000
   },
   {
     "year": 2008,
     "count": 156,
-    "median_owners": 150000
+    "measured_count": 155,
+    "median_owners": 150000,
+    "p25_owners": 35000,
+    "p75_owners": 350000
   },
   {
     "year": 2009,
     "count": 317,
-    "median_owners": 75000
+    "measured_count": 305,
+    "median_owners": 75000,
+    "p25_owners": 35000,
+    "p75_owners": 350000
   },
   {
     "year": 2010,
     "count": 254,
-    "median_owners": 75000
+    "measured_count": 253,
+    "median_owners": 75000,
+    "p25_owners": 35000,
+    "p75_owners": 350000
   },
   {
     "year": 2011,
     "count": 258,
-    "median_owners": 150000
+    "measured_count": 258,
+    "median_owners": 150000,
+    "p25_owners": 75000,
+    "p75_owners": 750000
   },
   {
     "year": 2012,
     "count": 320,
-    "median_owners": 350000
+    "measured_count": 320,
+    "median_owners": 350000,
+    "p25_owners": 75000,
+    "p75_owners": 750000
   },
   {
     "year": 2013,
     "count": 465,
-    "median_owners": 150000
+    "measured_count": 444,
+    "median_owners": 350000,
+    "p25_owners": 75000,
+    "p75_owners": 750000
   },
   {
     "year": 2014,
     "count": 1518,
-    "median_owners": 75000
+    "measured_count": 1511,
+    "median_owners": 75000,
+    "p25_owners": 35000,
+    "p75_owners": 150000
   },
   {
     "year": 2015,
     "count": 2511,
-    "median_owners": 35000
+    "measured_count": 2501,
+    "median_owners": 35000,
+    "p25_owners": 10000,
+    "p75_owners": 150000
   },
   {
     "year": 2016,
     "count": 4124,
-    "median_owners": 35000
+    "measured_count": 4113,
+    "median_owners": 35000,
+    "p25_owners": 10000,
+    "p75_owners": 75000
   },
   {
     "year": 2017,
     "count": 5897,
-    "median_owners": 10000
+    "measured_count": 5879,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 35000
   },
   {
     "year": 2018,
     "count": 7425,
-    "median_owners": 10000
+    "measured_count": 7403,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 35000
   },
   {
     "year": 2019,
     "count": 7204,
-    "median_owners": 10000
+    "measured_count": 7191,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 10000
   },
   {
     "year": 2020,
     "count": 8654,
-    "median_owners": 10000
+    "measured_count": 8640,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 35000
   },
   {
     "year": 2021,
     "count": 10281,
-    "median_owners": 10000
+    "measured_count": 9557,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 35000
   },
   {
     "year": 2022,
     "count": 11270,
-    "median_owners": 10000
+    "measured_count": 10049,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 10000
   },
   {
     "year": 2023,
     "count": 13172,
-    "median_owners": 10000
+    "measured_count": 11607,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 10000
   },
   {
     "year": 2024,
     "count": 17876,
-    "median_owners": 10000
+    "measured_count": 15478,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 10000
   },
   {
     "year": 2025,
     "count": 21564,
-    "median_owners": 10000
+    "measured_count": 14649,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 10000
   },
   {
     "year": 2026,
     "count": 84,
-    "median_owners": 0
+    "measured_count": 2,
+    "median_owners": 10000,
+    "p25_owners": 10000,
+    "p75_owners": 10000
   }
 ]

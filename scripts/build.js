@@ -231,22 +231,38 @@ async function main() {
     );
   }
 
-  // 2. Median owners by year
+  // 2. Median + 25th/75th percentile owners by year — feeds Scene 3 (median + band).
+  // Percentiles are computed over games with positive owner estimates only:
+  // SteamSpy's `0 - 0` bucket means "no data available", not "zero owners",
+  // and including those would pull the percentiles toward zero artificially.
+  // The total release count still reflects all games for the year.
   {
     const data = years.map((year) => {
       const games = byYear.get(year) || [];
+      const measured = games.filter((g) => g.ownersMid > 0);
+      const sorted = measured.slice().sort((a, b) => a.ownersMid - b.ownersMid);
       return {
         year,
         count: games.length,
-        median_owners: d3.median(games, (g) => g.ownersMid) ?? 0,
+        measured_count: measured.length,
+        median_owners: d3.median(sorted, (g) => g.ownersMid) ?? 0,
+        p25_owners: d3.quantile(sorted, 0.25, (g) => g.ownersMid) ?? 0,
+        p75_owners: d3.quantile(sorted, 0.75, (g) => g.ownersMid) ?? 0,
       };
     });
     await emit(
       "median_owners_by_year.json",
       data,
-      "2. Median owners by release year",
-      ["year", "releases", "median owners (mid)"],
-      data.map((r) => [r.year, fmtN(r.count), fmtN(r.median_owners)]),
+      "2. Median owners (with 25th/75th percentile band) by release year",
+      ["year", "releases", "measured", "p25 owners", "median owners", "p75 owners"],
+      data.map((r) => [
+        r.year,
+        fmtN(r.count),
+        fmtN(r.measured_count),
+        fmtN(r.p25_owners),
+        fmtN(r.median_owners),
+        fmtN(r.p75_owners),
+      ]),
     );
   }
 
@@ -571,6 +587,46 @@ async function main() {
         ...TIERS.map((t) =>
           `${fmtN(r[t])} (${fmtPct(r.total ? r[t] / r.total : 0)})`,
         ),
+      ]),
+    );
+  }
+
+  // 15. Median-cohort example games — feeds Scene 3 (The Median Crashed).
+  // For each year, pick three games whose owners_mid is closest to the year's
+  // median (computed over games with positive owner estimates, matching
+  // analysis 2). The Scene 3 hover tooltip surfaces these so the viewer can
+  // see "this is what the median game looks like" — usually obscure, often weird.
+  {
+    const data = years.map((year) => {
+      const games = (byYear.get(year) || []).filter((g) => g.ownersMid > 0);
+      if (!games.length) return { year, median_owners: 0, examples: [] };
+      const median = d3.median(games, (g) => g.ownersMid) ?? 0;
+      const ranked = games
+        .map((g) => ({
+          name: g.name,
+          appId: g.appId,
+          owners_mid: g.ownersMid,
+          distance: Math.abs(g.ownersMid - median),
+        }))
+        .sort(
+          (a, b) => a.distance - b.distance || a.name.localeCompare(b.name),
+        )
+        .slice(0, 3);
+      return {
+        year,
+        median_owners: median,
+        examples: ranked.map(({ distance, ...rest }) => rest),
+      };
+    });
+    await emit(
+      "median_examples_by_year.json",
+      data,
+      "15. Three example games closest to each year's median owners (Scene 3 source)",
+      ["year", "median", "examples"],
+      data.map((r) => [
+        r.year,
+        fmtN(r.median_owners),
+        r.examples.map((e) => e.name).join("; ") || "—",
       ]),
     );
   }

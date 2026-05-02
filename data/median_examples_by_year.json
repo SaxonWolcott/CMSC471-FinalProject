@@ -1,0 +1,480 @@
+[
+  {
+    "year": 2004,
+    "median_owners": 15000000,
+    "examples": [
+      {
+        "name": "Counter-Strike: Condition Zero",
+        "appId": "100",
+        "owners_mid": 15000000
+      },
+      {
+        "name": "Counter-Strike: Source",
+        "appId": "240",
+        "owners_mid": 15000000
+      },
+      {
+        "name": "Half-Life 2",
+        "appId": "220",
+        "owners_mid": 15000000
+      }
+    ]
+  },
+  {
+    "year": 2005,
+    "median_owners": 350000,
+    "examples": [
+      {
+        "name": "Sid Meier's Pirates!",
+        "appId": "3920",
+        "owners_mid": 350000
+      },
+      {
+        "name": "Geneforge 3",
+        "appId": "200990",
+        "owners_mid": 75000
+      },
+      {
+        "name": "Rag Doll Kung Fu",
+        "appId": "1002",
+        "owners_mid": 35000
+      }
+    ]
+  },
+  {
+    "year": 2006,
+    "median_owners": 150000,
+    "examples": [
+      {
+        "name": "Chuzzle Deluxe",
+        "appId": "3310",
+        "owners_mid": 150000
+      },
+      {
+        "name": "Dangerous Waters",
+        "appId": "1600",
+        "owners_mid": 150000
+      },
+      {
+        "name": "Dynomite Deluxe",
+        "appId": "3380",
+        "owners_mid": 150000
+      }
+    ]
+  },
+  {
+    "year": 2007,
+    "median_owners": 550000,
+    "examples": [
+      {
+        "name": "Alpha Prime",
+        "appId": "2590",
+        "owners_mid": 350000
+      },
+      {
+        "name": "Arx Fatalis",
+        "appId": "1700",
+        "owners_mid": 350000
+      },
+      {
+        "name": "Battlestations: Midway",
+        "appId": "6870",
+        "owners_mid": 750000
+      }
+    ]
+  },
+  {
+    "year": 2008,
+    "median_owners": 150000,
+    "examples": [
+      {
+        "name": "Act of War: Direct Action",
+        "appId": "2710",
+        "owners_mid": 150000
+      },
+      {
+        "name": "Brothers in Arms: Earned in Blood™",
+        "appId": "19800",
+        "owners_mid": 150000
+      },
+      {
+        "name": "Conflict: Denied Ops",
+        "appId": "8100",
+        "owners_mid": 150000
+      }
+    ]
+  },
+  {
+    "year": 2009,
+    "median_owners": 75000,
+    "examples": [
+      {
+        "name": "All Aspect Warfare",
+        "appId": "36910",
+        "owners_mid": 75000
+      },
+      {
+        "name": "Angle of Attack",
+        "appId": "36900",
+        "owners_mid": 75000
+      },
+      {
+        "name": "Ceville",
+        "appId": "23460",
+        "owners_mid": 75000
+      }
+    ]
+  },
+  {
+    "year": 2010,
+    "median_owners": 75000,
+    "examples": [
+      {
+        "name": "4 Elements",
+        "appId": "47000",
+        "owners_mid": 75000
+      },
+      {
+        "name": "Alter Ego",
+        "appId": "63110",
+        "owners_mid": 75000
+      },
+      {
+        "name": "Alternativa",
+        "appId": "33990",
+        "owners_mid": 75000
+      }
+    ]
+  },
+  {
+    "year": 2011,
+    "median_owners": 150000,
+    "examples": [
+      {
+        "name": "A Game of Thrones - Genesis",
+        "appId": "58550",
+        "owners_mid": 150000
+      },
+      {
+        "name": "Agricultural Simulator 2011: Extended Edition",
+        "appId": "92900",
+        "owners_mid": 150000
+      },
+      {
+        "name": "Air Conflicts: Secret Wars",
+        "appId": "95900",
+        "owners_mid": 150000
+      }
+    ]
+  },
+  {
+    "year": 2012,
+    "median_owners": 350000,
+    "examples": [
+      {
+        "name": "3SwitcheD",
+        "appId": "206610",
+        "owners_mid": 350000
+      },
+      {
+        "name": "A New Beginning - Final Cut",
+        "appId": "105000",
+        "owners_mid": 350000
+      },
+      {
+        "name": "A Virus Named TOM",
+        "appId": "207650",
+        "owners_mid": 350000
+      }
+    ]
+  },
+  {
+    "year": 2013,
+    "median_owners": 350000,
+    "examples": [
+      {
+        "name": "140",
+        "appId": "242820",
+        "owners_mid": 350000
+      },
+      {
+        "name": "99 Spirits",
+        "appId": "258090",
+        "owners_mid": 350000
+      },
+      {
+        "name": "Aarklash: Legacy",
+        "appId": "222640",
+        "owners_mid": 350000
+      }
+    ]
+  },
+  {
+    "year": 2014,
+    "median_owners": 75000,
+    "examples": [
+      {
+        "name": "10 Second Ninja",
+        "appId": "271670",
+        "owners_mid": 75000
+      },
+      {
+        "name": "1001 Spikes",
+        "appId": "260790",
+        "owners_mid": 75000
+      },
+      {
+        "name": "1Quest",
+        "appId": "332710",
+        "owners_mid": 75000
+      }
+    ]
+  },
+  {
+    "year": 2015,
+    "median_owners": 35000,
+    "examples": [
+      {
+        "name": "//SNOWFLAKE TATTOO//",
+        "appId": "355430",
+        "owners_mid": 35000
+      },
+      {
+        "name": "12 Labours of Hercules IV: Mother Nature (Platinum Edition)",
+        "appId": "396800",
+        "owners_mid": 35000
+      },
+      {
+        "name": "123 Slaughter Me Street",
+        "appId": "405180",
+        "owners_mid": 35000
+      }
+    ]
+  },
+  {
+    "year": 2016,
+    "median_owners": 35000,
+    "examples": [
+      {
+        "name": "12 Labours of Hercules V: Kids of Hellas (Platinum Edition)",
+        "appId": "491330",
+        "owners_mid": 35000
+      },
+      {
+        "name": "123 Slaughter Me Street 2",
+        "appId": "551190",
+        "owners_mid": 35000
+      },
+      {
+        "name": "18 Wheels of Steel: Convoy",
+        "appId": "514170",
+        "owners_mid": 35000
+      }
+    ]
+  },
+  {
+    "year": 2017,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "(VR)西汉帝陵 The Han Dynasty Imperial Mausoleums",
+        "appId": "568330",
+        "owners_mid": 10000
+      },
+      {
+        "name": "#Archery",
+        "appId": "493790",
+        "owners_mid": 10000
+      },
+      {
+        "name": "＜/reality＞",
+        "appId": "562280",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2018,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "_dive",
+        "appId": "878950",
+        "owners_mid": 10000
+      },
+      {
+        "name": "'1st Core: The Zombie Killing Cyborg'",
+        "appId": "879270",
+        "owners_mid": 10000
+      },
+      {
+        "name": "[it's possible] Classic",
+        "appId": "968170",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2019,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "::CallBack",
+        "appId": "985930",
+        "owners_mid": 10000
+      },
+      {
+        "name": "¡Zombies! : Faulty Towers",
+        "appId": "451590",
+        "owners_mid": 10000
+      },
+      {
+        "name": ".fall",
+        "appId": "1087950",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2020,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "_OUR_:_Defense 2021",
+        "appId": "1358000",
+        "owners_mid": 10000
+      },
+      {
+        "name": "-SPROUT-",
+        "appId": "1336340",
+        "owners_mid": 10000
+      },
+      {
+        "name": "! Wild Russia !",
+        "appId": "1287250",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2021,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "- R E F L E C T E D -",
+        "appId": "1692280",
+        "owners_mid": 10000
+      },
+      {
+        "name": "-A-",
+        "appId": "1566990",
+        "owners_mid": 10000
+      },
+      {
+        "name": "[International] AbsentedAge: Squarebound",
+        "appId": "1615930",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "- Am I kind-hearted? - ワタシのココロは綺麗ですか？",
+        "appId": "2050840",
+        "owners_mid": 10000
+      },
+      {
+        "name": "- Doki Doki Family - 特異体質者のドキドキ家族生活",
+        "appId": "1961860",
+        "owners_mid": 10000
+      },
+      {
+        "name": "- Mischief Dungeon Life - 異世界転生した俺のイタズラダンジョンライフ",
+        "appId": "1961870",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2023,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "! Shakabula *",
+        "appId": "2556940",
+        "owners_mid": 10000
+      },
+      {
+        "name": "¡Arre Unicornio!",
+        "appId": "1673650",
+        "owners_mid": 10000
+      },
+      {
+        "name": "(Dis)assemble",
+        "appId": "1870660",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2024,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "-HOME- Survival",
+        "appId": "1833060",
+        "owners_mid": 10000
+      },
+      {
+        "name": ".Decluster & .Decluster Zero",
+        "appId": "3088370",
+        "owners_mid": 10000
+      },
+      {
+        "name": "“LIGHT” IS",
+        "appId": "3339220",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2025,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "_turing",
+        "appId": "2895510",
+        "owners_mid": 10000
+      },
+      {
+        "name": "-Ham Cafe- Ohamu Shokudo Ki",
+        "appId": "3611940",
+        "owners_mid": 10000
+      },
+      {
+        "name": "-ing Angler",
+        "appId": "3382110",
+        "owners_mid": 10000
+      }
+    ]
+  },
+  {
+    "year": 2026,
+    "median_owners": 10000,
+    "examples": [
+      {
+        "name": "Journey Express",
+        "appId": "2127350",
+        "owners_mid": 10000
+      },
+      {
+        "name": "Teddy Knight",
+        "appId": "3325200",
+        "owners_mid": 10000
+      }
+    ]
+  }
+]

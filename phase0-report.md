@@ -1,6 +1,6 @@
 # Phase 0 — Data Validation Report
 
-Generated 2026-05-02T21:34:28.409Z from `raw_data/games.csv` in 4.2s.
+Generated 2026-05-02T23:16:46.751Z from `raw_data/games.csv` in 5.1s.
 
 - Total raw rows: **122,611**
 - After cleaning (real games, parseable date, valid owners range): **113,525**
@@ -44,35 +44,35 @@ trend candidates (platform support, localization, recent engagement, DLC).
 | 2025 | 21,564 |
 | 2026 | 84 |
 
-### 2. Median owners by release year
+### 2. Median owners (with 25th/75th percentile band) by release year
 
 `data/median_owners_by_year.json`
 
-| year | releases | median owners (mid) |
-| --- | --- | --- |
-| 2004 | 6 | 15,000,000 |
-| 2005 | 7 | 350,000 |
-| 2006 | 69 | 150,000 |
-| 2007 | 90 | 550,000 |
-| 2008 | 156 | 150,000 |
-| 2009 | 317 | 75,000 |
-| 2010 | 254 | 75,000 |
-| 2011 | 258 | 150,000 |
-| 2012 | 320 | 350,000 |
-| 2013 | 465 | 150,000 |
-| 2014 | 1,518 | 75,000 |
-| 2015 | 2,511 | 35,000 |
-| 2016 | 4,124 | 35,000 |
-| 2017 | 5,897 | 10,000 |
-| 2018 | 7,425 | 10,000 |
-| 2019 | 7,204 | 10,000 |
-| 2020 | 8,654 | 10,000 |
-| 2021 | 10,281 | 10,000 |
-| 2022 | 11,270 | 10,000 |
-| 2023 | 13,172 | 10,000 |
-| 2024 | 17,876 | 10,000 |
-| 2025 | 21,564 | 10,000 |
-| 2026 | 84 | 0 |
+| year | releases | measured | p25 owners | median owners | p75 owners |
+| --- | --- | --- | --- | --- | --- |
+| 2004 | 6 | 6 | 9,375,000 | 15,000,000 | 15,000,000 |
+| 2005 | 7 | 7 | 55,000 | 350,000 | 750,000 |
+| 2006 | 69 | 69 | 75,000 | 150,000 | 750,000 |
+| 2007 | 90 | 90 | 150,000 | 550,000 | 750,000 |
+| 2008 | 156 | 155 | 35,000 | 150,000 | 350,000 |
+| 2009 | 317 | 305 | 35,000 | 75,000 | 350,000 |
+| 2010 | 254 | 253 | 35,000 | 75,000 | 350,000 |
+| 2011 | 258 | 258 | 75,000 | 150,000 | 750,000 |
+| 2012 | 320 | 320 | 75,000 | 350,000 | 750,000 |
+| 2013 | 465 | 444 | 75,000 | 350,000 | 750,000 |
+| 2014 | 1,518 | 1,511 | 35,000 | 75,000 | 150,000 |
+| 2015 | 2,511 | 2,501 | 10,000 | 35,000 | 150,000 |
+| 2016 | 4,124 | 4,113 | 10,000 | 35,000 | 75,000 |
+| 2017 | 5,897 | 5,879 | 10,000 | 10,000 | 35,000 |
+| 2018 | 7,425 | 7,403 | 10,000 | 10,000 | 35,000 |
+| 2019 | 7,204 | 7,191 | 10,000 | 10,000 | 10,000 |
+| 2020 | 8,654 | 8,640 | 10,000 | 10,000 | 35,000 |
+| 2021 | 10,281 | 9,557 | 10,000 | 10,000 | 35,000 |
+| 2022 | 11,270 | 10,049 | 10,000 | 10,000 | 10,000 |
+| 2023 | 13,172 | 11,607 | 10,000 | 10,000 | 10,000 |
+| 2024 | 17,876 | 15,478 | 10,000 | 10,000 | 10,000 |
+| 2025 | 21,564 | 14,649 | 10,000 | 10,000 | 10,000 |
+| 2026 | 84 | 2 | 10,000 | 10,000 | 10,000 |
 
 ### 3. "Drowned" rate — share of releases with owners_high ≤ 20,000
 
@@ -440,3 +440,33 @@ trend candidates (platform support, localization, recent engagement, DLC).
 | 2024 | 17,876 | 15,676 (87.7%) | 1,577 (8.8%) | 570 (3.2%) | 45 (0.3%) | 8 (0.0%) |
 | 2025 | 21,564 | 20,596 (95.5%) | 717 (3.3%) | 219 (1.0%) | 27 (0.1%) | 5 (0.0%) |
 | 2026 | 84 | 84 (100.0%) | 0 (0.0%) | 0 (0.0%) | 0 (0.0%) | 0 (0.0%) |
+
+### 15. Three example games closest to each year's median owners (Scene 3 source)
+
+`data/median_examples_by_year.json`
+
+| year | median | examples |
+| --- | --- | --- |
+| 2004 | 15,000,000 | Counter-Strike: Condition Zero; Counter-Strike: Source; Half-Life 2 |
+| 2005 | 350,000 | Sid Meier's Pirates!; Geneforge 3; Rag Doll Kung Fu |
+| 2006 | 150,000 | Chuzzle Deluxe; Dangerous Waters; Dynomite Deluxe |
+| 2007 | 550,000 | Alpha Prime; Arx Fatalis; Battlestations: Midway |
+| 2008 | 150,000 | Act of War: Direct Action; Brothers in Arms: Earned in Blood™; Conflict: Denied Ops |
+| 2009 | 75,000 | All Aspect Warfare; Angle of Attack; Ceville |
+| 2010 | 75,000 | 4 Elements; Alter Ego; Alternativa |
+| 2011 | 150,000 | A Game of Thrones - Genesis; Agricultural Simulator 2011: Extended Edition; Air Conflicts: Secret Wars |
+| 2012 | 350,000 | 3SwitcheD; A New Beginning - Final Cut; A Virus Named TOM |
+| 2013 | 350,000 | 140; 99 Spirits; Aarklash: Legacy |
+| 2014 | 75,000 | 10 Second Ninja; 1001 Spikes; 1Quest |
+| 2015 | 35,000 | //SNOWFLAKE TATTOO//; 12 Labours of Hercules IV: Mother Nature (Platinum Edition); 123 Slaughter Me Street |
+| 2016 | 35,000 | 12 Labours of Hercules V: Kids of Hellas (Platinum Edition); 123 Slaughter Me Street 2; 18 Wheels of Steel: Convoy |
+| 2017 | 10,000 | (VR)西汉帝陵 The Han Dynasty Imperial Mausoleums; #Archery; ＜/reality＞ |
+| 2018 | 10,000 | _dive; '1st Core: The Zombie Killing Cyborg'; [it's possible] Classic |
+| 2019 | 10,000 | ::CallBack; ¡Zombies! : Faulty Towers; .fall |
+| 2020 | 10,000 | _OUR_:_Defense 2021; -SPROUT-; ! Wild Russia ! |
+| 2021 | 10,000 | - R E F L E C T E D -; -A-; [International] AbsentedAge: Squarebound |
+| 2022 | 10,000 | - Am I kind-hearted? - ワタシのココロは綺麗ですか？; - Doki Doki Family - 特異体質者のドキドキ家族生活; - Mischief Dungeon Life - 異世界転生した俺のイタズラダンジョンライフ |
+| 2023 | 10,000 | ! Shakabula *; ¡Arre Unicornio!; (Dis)assemble |
+| 2024 | 10,000 | -HOME- Survival; .Decluster & .Decluster Zero; “LIGHT” IS |
+| 2025 | 10,000 | _turing; -Ham Cafe- Ohamu Shokudo Ki; -ing Angler |
+| 2026 | 10,000 | Journey Express; Teddy Knight |
