@@ -218,10 +218,10 @@ function renderDetail(host, game, gamesByYear) {
   const tierLabel = TIER_LABELS[game.tier];
   const positionPhrase =
     game.tier === "drowned"
-      ? `${tierLabel} — in the smallest SteamSpy bucket along with ${d3.format(
-          ".0%",
-        )(atOrAboveShare)} of ${game.year} releases.`
-      : `${tierLabel} — only ${d3.format(".0%")(atOrAboveShare)} of ${game.year} releases reached this tier or higher.`;
+      ? `${tierLabel} — in the smallest SteamSpy bucket along with ${formatShareLabel(
+          atOrAboveShare,
+        )} of ${game.year} releases.`
+      : `${tierLabel} — only ${formatShareLabel(atOrAboveShare)} of ${game.year} releases reached this tier or higher.`;
 
   const ownersLabel =
     game.ownersMid > 0
@@ -340,6 +340,14 @@ function drawCohortLegend(host, tierCounts, total, selectedTier) {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+// Floor a tiny-but-nonzero share to "<1%" so a single Phenomenon out of 13k
+// releases doesn't render as a misleading "0%".
+function formatShareLabel(share) {
+  if (share <= 0) return "0%";
+  const formatted = d3.format(".0%")(share);
+  return formatted === "0%" ? "<1%" : formatted;
+}
 
 function escapeHtml(s) {
   return String(s)
