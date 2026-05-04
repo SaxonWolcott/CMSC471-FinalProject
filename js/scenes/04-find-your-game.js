@@ -309,7 +309,7 @@ function drawCohortBar(host, tierCounts, total, selectedTier) {
         "points",
         `${markerX - 4},${markerH - 2} ${markerX + 4},${markerH - 2} ${markerX},${markerH + 4}`,
       )
-      .attr("fill", "#1a1a1a");
+      .attr("fill", "#ffffff");
   }
 }
 

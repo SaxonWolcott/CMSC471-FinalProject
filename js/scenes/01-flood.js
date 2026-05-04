@@ -171,8 +171,8 @@ function createChart(host, tooltip, data) {
     .append("rect")
     .attr("class", "bar-highlight")
     .attr("fill", "none")
-    .attr("stroke", "#1a1a1a")
-    .attr("stroke-width", 1.25)
+    .attr("stroke", "#ffffff")
+    .attr("stroke-width", 1.5)
     .attr("pointer-events", "none")
     .attr("display", "none");
 
@@ -199,7 +199,7 @@ function createChart(host, tooltip, data) {
       .attr("x2", x)
       .attr("y1", -10)
       .attr("y2", innerHeight)
-      .attr("stroke", "#444")
+      .attr("stroke", "#c7d5e0")
       .attr("stroke-width", 1)
       .attr("stroke-dasharray", "3,3")
       .attr("class", "annotation-line");
@@ -224,12 +224,12 @@ function createChart(host, tooltip, data) {
       .datum(a);
 
     const onEnter = (event, datum) => {
-      lineEl.attr("stroke", "#000").attr("stroke-width", 1.5);
-      labelEl.attr("fill", "#000");
+      lineEl.attr("stroke", "#ffffff").attr("stroke-width", 1.5);
+      labelEl.attr("fill", "#ffffff");
       showTooltip(tooltip, host, x, datum);
     };
     const onLeave = () => {
-      lineEl.attr("stroke", "#444").attr("stroke-width", 1);
+      lineEl.attr("stroke", "#c7d5e0").attr("stroke-width", 1);
       labelEl.attr("fill", null);
       hideTooltip(tooltip);
     };
@@ -257,7 +257,7 @@ function createChart(host, tooltip, data) {
         sel
           .selectAll(".tick line")
           .attr("x2", innerWidth)
-          .attr("stroke", "#ececec"),
+          .attr("stroke", "rgba(199, 213, 224, 0.12)"),
       )
       .call((sel) => sel.selectAll(".tick text").attr("dx", -4));
 

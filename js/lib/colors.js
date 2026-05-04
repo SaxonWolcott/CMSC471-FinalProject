@@ -1,19 +1,20 @@
-// Sequential single-hue blue palette for Scene 1's owner-bucket tiers.
-// Darkest (Drowned) sits at the bottom of each bar; lightest (Phenomenon) at
-// the top. The "flood" metaphor is intentional — drowned games are submerged
-// in deep water; the rare hits surface into pale daylight.
+// Steam-themed tier palette for Scene 1's owner-bucket tiers.
 //
-// Range chosen for clear contrast at both ends without going pure white
-// (which would disappear against the page background).
+// The chart sits on a dark navy background, so the previous "darkest = drowned"
+// scheme would have made the dominant tier invisible. Instead: Drowned is the
+// brightest Steam-cyan (since it grows to fill 95% of bars, it should be the
+// visual focus), middle tiers fade through deeper blues, and the rare
+// Phenomenon tier resurfaces as near-white — a bright sliver that stands out
+// at the top of each bar.
 
 export const TIERS = ["drowned", "niche", "modest", "hit", "phenomenon"];
 
 export const TIER_COLORS = {
-  drowned: "#08306b",
-  niche: "#2171b5",
-  modest: "#4292c6",
-  hit: "#9ecae1",
-  phenomenon: "#deebf7",
+  drowned: "#67c1f5",       // Steam iconic cyan, brightest
+  niche: "#4a93c4",
+  modest: "#2e6991",
+  hit: "#1f4866",
+  phenomenon: "#e6edf2",    // near-white, rare hits visible at top
 };
 
 export const TIER_LABELS = {

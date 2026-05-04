@@ -23,10 +23,10 @@ const FEATURED_GENRES = [
 ];
 const DEFAULT_SELECTED = "Indie";
 
-const SELECTED_COLOR = "#2171b5"; // matches Scene 1 "Niche" tier — visual continuity
-const MUTED_COLOR = "#cfcfcf";
-const SELECTED_TEXT = "#1a1a1a";
-const MUTED_TEXT = "#9a9a9a";
+const SELECTED_COLOR = "#66c0f4";   // Steam iconic cyan
+const MUTED_COLOR = "#4b6479";      // muted blue-gray, visible on dark bg
+const SELECTED_TEXT = "#ffffff";
+const MUTED_TEXT = "#8f98a0";
 const TRANSITION_MS = 320;
 
 export function renderIndieWave(container, data) {
@@ -96,7 +96,7 @@ function createChart(host, tooltip, byYear) {
       sel
         .selectAll(".tick line")
         .attr("x2", innerWidth)
-        .attr("stroke", "#ececec"),
+        .attr("stroke", "rgba(199, 213, 224, 0.12)"),
     )
     .call((sel) => sel.selectAll(".tick text").attr("dx", -4));
 
@@ -180,7 +180,7 @@ function createChart(host, tooltip, byYear) {
     .attr("class", "focus-line")
     .attr("y1", 0)
     .attr("y2", innerHeight)
-    .attr("stroke", "#888")
+    .attr("stroke", "#c7d5e0")
     .attr("stroke-width", 1)
     .attr("stroke-dasharray", "2,3")
     .attr("display", "none")
