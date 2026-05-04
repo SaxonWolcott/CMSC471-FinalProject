@@ -53,30 +53,24 @@ strong { color: var(--fg-bright); }
 .hero {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 6rem 1.5rem 3rem;
-  text-align: center;
+  padding: 5rem 1.5rem 3rem;
 }
 
 .hero h1 {
   font-size: clamp(2.25rem, 6vw, 4.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin: 0 0 1rem;
+  margin: 0 0 1.5rem;
   color: var(--fg-bright);
+  text-align: center;
 }
 
-.hero .subtitle {
-  font-size: 1.25rem;
-  color: var(--muted);
+.hero__intro {
+  font-size: 1.125rem;
+  color: var(--fg);
   margin: 0 auto;
-  max-width: 640px;
-}
-
-.hero .tag {
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-style: italic;
+  max-width: 720px;
+  line-height: 1.65;
 }
 
 /* ---------- Scene scaffold ---------- */

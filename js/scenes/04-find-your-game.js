@@ -328,9 +328,8 @@ function drawCohortBar(host, tierCounts, total, selectedTier) {
     share: (tierCounts[t] || 0) / total,
   }));
 
-  const barH = 28;
-  const markerH = 14;
-  const totalH = barH + markerH + 6;
+  const barH = 32;
+  const totalH = barH + 4;
   const svg = d3
     .select(host)
     .append("svg")
@@ -340,29 +339,40 @@ function drawCohortBar(host, tierCounts, total, selectedTier) {
     .attr("height", totalH * 2);
 
   let xCursor = 0;
-  let markerX = null;
+  let selectedX = null;
+  let selectedW = 0;
   for (const seg of segments) {
     const w = seg.share * 100;
     svg
       .append("rect")
       .attr("x", xCursor)
-      .attr("y", markerH + 6)
+      .attr("y", 0)
       .attr("width", w)
       .attr("height", barH)
       .attr("fill", TIER_COLORS[seg.tier]);
-    if (seg.tier === selectedTier) markerX = xCursor + w / 2;
+    if (seg.tier === selectedTier) {
+      selectedX = xCursor;
+      selectedW = w;
+    }
     xCursor += w;
   }
 
-  if (markerX !== null) {
-    // Triangle pointer pointing down at the selected tier's segment.
+  if (selectedX !== null) {
+    // White outline around the selected tier's segment. This replaces the
+    // earlier triangle pointer, which was 8 viewBox units wide and clipped
+    // off-screen for thin tiers (Hit / Phenomenon). non-scaling-stroke keeps
+    // the outline at 2px on screen no matter how thin the segment is, so
+    // even a 0.05% Phenomenon segment shows a visible white border.
     svg
-      .append("polygon")
-      .attr(
-        "points",
-        `${markerX - 4},${markerH - 2} ${markerX + 4},${markerH - 2} ${markerX},${markerH + 4}`,
-      )
-      .attr("fill", "#ffffff");
+      .append("rect")
+      .attr("x", selectedX)
+      .attr("y", 0)
+      .attr("width", selectedW)
+      .attr("height", barH)
+      .attr("fill", "none")
+      .attr("stroke", "#ffffff")
+      .attr("stroke-width", 2)
+      .attr("vector-effect", "non-scaling-stroke");
   }
 }
 
