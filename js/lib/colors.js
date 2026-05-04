@@ -1,20 +1,22 @@
-// Steam-themed tier palette for Scene 1's owner-bucket tiers.
+// Cool-to-warm tier palette for Scene 1's owner-bucket tiers.
 //
-// The chart sits on a dark navy background, so the previous "darkest = drowned"
-// scheme would have made the dominant tier invisible. Instead: Drowned is the
-// brightest Steam-cyan (since it grows to fill 95% of bars, it should be the
-// visual focus), middle tiers fade through deeper blues, and the rare
-// Phenomenon tier resurfaces as near-white — a bright sliver that stands out
-// at the top of each bar.
+// The chart sits on a dark navy background, where any all-blue palette
+// produced muddy mid-tiers and competed with Steam's cyan accent. A
+// cool-to-warm gradient solves both: the dominant Drowned tier sits as a
+// muted cool blue (visible-but-quiet, since it grows to fill 95% of bars and
+// would be visually overwhelming if saturated), the middle tiers progress
+// to a transitional light blue, and the rare Hit / Phenomenon tiers emerge
+// in warm amber and gold so they read as "the bright exceptions" against
+// the cool field beneath them.
 
 export const TIERS = ["drowned", "niche", "modest", "hit", "phenomenon"];
 
 export const TIER_COLORS = {
-  drowned: "#67c1f5",       // Steam iconic cyan, brightest
-  niche: "#4a93c4",
-  modest: "#2e6991",
-  hit: "#1f4866",
-  phenomenon: "#e6edf2",    // near-white, rare hits visible at top
+  drowned: "#3a5570",       // dim cool blue — recedes into the field
+  niche: "#5b85a8",         // medium cool blue
+  modest: "#bcd5e6",        // pale cool blue — transitional
+  hit: "#f0a93f",           // warm amber — visible breakthrough
+  phenomenon: "#ffd966",    // golden cream — rare highlight
 };
 
 export const TIER_LABELS = {

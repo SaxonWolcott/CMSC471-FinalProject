@@ -32,7 +32,10 @@ html, body {
   padding: 0;
   background: var(--bg);
   color: var(--fg);
-  font-family: "Motiva Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Motiva Sans is Steam's house font (hot-linked in index.html); Source Sans 3
+     is the closest open-source match and serves as the reliable fallback when
+     Steam's font CSS doesn't resolve cross-origin. System sans rounds it out. */
+  font-family: "Motiva Sans", "Source Sans 3", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;

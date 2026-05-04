@@ -4,6 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Steam, Over Time — CMSC471 Final Project</title>
+
+  <!-- Steam's actual Motiva Sans CSS, hot-linked from their CDN. May or may not
+       resolve cross-origin depending on Valve's headers; the Google fallback
+       below covers either case. -->
+  <link rel="stylesheet" href="https://store.akamai.steamstatic.com/public/shared/css/motiva_sans.css" crossorigin="anonymous" />
+
+  <!-- Source Sans 3: open-source font that's visually closest to Motiva Sans;
+       used whenever Motiva Sans isn't available. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="./css/styles.css" />
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://unpkg.com/scrollama"></script>
