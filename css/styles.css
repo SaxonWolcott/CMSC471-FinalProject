@@ -475,6 +475,21 @@ a:hover { text-decoration: underline; }
   padding: 1.25rem 1.5rem;
 }
 
+.fyg-card__image {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 460 / 215;
+  object-fit: cover;
+  border-radius: 6px;
+  margin: 0 auto 1rem;
+  background: #f0f0f0;
+}
+
+.fyg-card__image.is-hidden {
+  display: none;
+}
+
 .fyg-card__header {
   margin-bottom: 1rem;
   border-bottom: 1px solid var(--border);

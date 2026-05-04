@@ -644,12 +644,16 @@ async function main() {
     return "phenomenon";
   }
   {
+    // Price intentionally omitted — the SteamSpy snapshot captures whatever the
+    // price was at scrape time, including sales (Witcher 3 at $2.99, etc.), so
+    // displaying it as "the game's price" would be misleading. Per-cohort price
+    // tier distributions live in `price_tier_by_year.json` for any aggregate
+    // use case (e.g., the Scene 5 hypothetical-game simulator).
     const fields = [
       "appId",
       "name",
       "year",
       "ownersMid",
-      "price",
       "tier",
       "isIndie",
       "genres",
@@ -659,7 +663,6 @@ async function main() {
       g.name,
       g.releaseYear,
       g.ownersMid,
-      Number(g.price.toFixed(2)),
       ownerTierFn(g),
       g.genres.includes("Indie") ? 1 : 0,
       g.genres.slice(0, 3).join(","),

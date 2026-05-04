@@ -98,11 +98,16 @@ function unpack({ fields, rows }) {
     name: row[idx.name],
     year: row[idx.year],
     ownersMid: row[idx.ownersMid],
-    price: row[idx.price],
     tier: row[idx.tier],
     isIndie: row[idx.isIndie] === 1,
     genres: row[idx.genres] ? String(row[idx.genres]).split(",") : [],
   }));
+}
+
+// Steam serves header images for any appId at this CDN path. Returns null
+// when the image fails to load so we can hide the element gracefully.
+function steamHeaderUrl(appId) {
+  return `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${appId}/header.jpg`;
 }
 
 // ---------------------------------------------------------------------------
@@ -222,11 +227,17 @@ function renderDetail(host, game, gamesByYear) {
     game.ownersMid > 0
       ? `~${d3.format(",")(game.ownersMid)} (SteamSpy estimate)`
       : "no SteamSpy estimate available";
-  const priceLabel = game.price > 0 ? `$${game.price.toFixed(2)}` : "Free";
   const genreLabel = game.genres.length ? game.genres.join(", ") : "—";
 
   host.innerHTML = `
     <div class="fyg-card">
+      <img
+        class="fyg-card__image"
+        src="${steamHeaderUrl(game.appId)}"
+        alt=""
+        loading="lazy"
+        onerror="this.classList.add('is-hidden')"
+      />
       <div class="fyg-card__header">
         <h3 class="fyg-card__name">${escapeHtml(game.name)}</h3>
         <div class="fyg-card__meta">${game.year} · ${escapeHtml(genreLabel)}${game.isIndie ? " · Indie" : ""}</div>
@@ -235,10 +246,6 @@ function renderDetail(host, game, gamesByYear) {
         <div class="fyg-stat">
           <span class="fyg-stat__label">Estimated owners</span>
           <span class="fyg-stat__value">${escapeHtml(ownersLabel)}</span>
-        </div>
-        <div class="fyg-stat">
-          <span class="fyg-stat__label">Price</span>
-          <span class="fyg-stat__value">${escapeHtml(priceLabel)}</span>
         </div>
         <div class="fyg-stat">
           <span class="fyg-stat__label">Tier in ${game.year}</span>

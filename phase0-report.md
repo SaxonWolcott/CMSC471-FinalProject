@@ -1,6 +1,6 @@
 # Phase 0 — Data Validation Report
 
-Generated 2026-05-04T16:27:05.340Z from `raw_data/games.csv` in 4.5s.
+Generated 2026-05-04T16:56:18.282Z from `raw_data/games.csv` in 4.9s.
 
 - Total raw rows: **122,611**
 - After cleaning (real games, parseable date, valid owners range): **113,525**
@@ -473,4 +473,4 @@ trend candidates (platform support, localization, recent engagement, DLC).
 
 ### 16. Per-game slim records (Scene 4 source)
 
-`data/game_dots.json` — 113,525 games in tabular format (`fields` + `rows`) with: appId, name, year, ownersMid, price, tier, isIndie, genres. Used by Find Your Game for autocomplete + cohort comparison.
+`data/game_dots.json` — 113,525 games in tabular format (`fields` + `rows`) with: appId, name, year, ownersMid, tier, isIndie, genres. Used by Find Your Game for autocomplete + cohort comparison.
