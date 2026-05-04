@@ -631,6 +631,51 @@ async function main() {
     );
   }
 
+  // 16. Per-game slim records — feeds Scene 4 (Find Your Game). Tabular format
+  // (a `fields` header plus `rows` of value arrays) cuts JSON key overhead vs
+  // an array-of-objects shape, since this file ships to every visitor of the
+  // site — keeping it small matters more than ergonomics. The browser-side
+  // module reconstitutes objects from the rows on load.
+  function ownerTierFn(g) {
+    if (g.ownersHigh <= 20_000) return "drowned";
+    if (g.ownersMid <= 100_000) return "niche";
+    if (g.ownersMid <= 1_000_000) return "modest";
+    if (g.ownersMid <= 10_000_000) return "hit";
+    return "phenomenon";
+  }
+  {
+    const fields = [
+      "appId",
+      "name",
+      "year",
+      "ownersMid",
+      "price",
+      "tier",
+      "isIndie",
+      "genres",
+    ];
+    const rows = cleaned.map((g) => [
+      g.appId,
+      g.name,
+      g.releaseYear,
+      g.ownersMid,
+      Number(g.price.toFixed(2)),
+      ownerTierFn(g),
+      g.genres.includes("Indie") ? 1 : 0,
+      g.genres.slice(0, 3).join(","),
+    ]);
+    await writeFile(
+      join(DATA_OUT, "game_dots.json"),
+      JSON.stringify({ fields, rows }),
+    );
+    reportSections.push(
+      `### 16. Per-game slim records (Scene 4 source)\n\n` +
+      `\`data/game_dots.json\` — ${fmtN(rows.length)} games in tabular format ` +
+      `(\`fields\` + \`rows\`) with: ${fields.join(", ")}. ` +
+      `Used by Find Your Game for autocomplete + cohort comparison.\n`,
+    );
+  }
+
   // Write the consolidated markdown report.
   const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
   const report = [

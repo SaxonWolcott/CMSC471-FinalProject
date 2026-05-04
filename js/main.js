@@ -4,7 +4,7 @@
 
 import { renderFlood } from "./scenes/01-flood.js";
 import { renderIndieWave } from "./scenes/02-indie-wave.js";
-import { renderMedianCrashed } from "./scenes/03-median-crashed.js";
+import { renderFindYourGame } from "./scenes/04-find-your-game.js";
 
 const log = (...args) => console.log("[main]", ...args);
 
@@ -41,23 +41,14 @@ async function main() {
     log("Scene 2 (Indie Wave) rendered");
   }
 
-  const [medianRaw, examplesRaw, engagementRaw] = await Promise.all([
-    loadJSON("./data/median_owners_by_year.json"),
-    loadJSON("./data/median_examples_by_year.json"),
-    loadJSON("./data/engagement_by_year.json"),
-  ]);
-  log(
-    `median_owners: ${medianRaw.length} years, examples: ${examplesRaw.length} years, engagement: ${engagementRaw.length} years`,
-  );
+  // Scene 3 (Quality) is a placeholder for now — content lives in HTML.
 
-  const medianHost = document.getElementById("scene-median-viz");
-  if (medianHost) {
-    renderMedianCrashed(medianHost, {
-      median: medianRaw,
-      examples: examplesRaw,
-      engagement: engagementRaw,
-    });
-    log("Scene 3 (Median Crashed) rendered");
+  const findYourGameHost = document.getElementById("scene-find-your-game-viz");
+  if (findYourGameHost) {
+    const games = await loadJSON("./data/game_dots.json");
+    log(`game_dots: ${games.length} games loaded`);
+    renderFindYourGame(findYourGameHost, games);
+    log("Scene 4 (Find Your Game) rendered");
   }
 }
 

@@ -61,30 +61,61 @@
       </p>
     </section>
 
-    <section class="scene" id="scene-median">
+    <section class="scene" id="scene-quality">
       <div class="scene__intro">
-        <h2 class="scene__title">3. The Median Crashed</h2>
+        <h2 class="scene__title">3. Has Quality Held Up?</h2>
         <p class="scene__lead">
-          As the catalog grew, the typical game's audience shrank. In 2012,
-          the median Steam release found roughly 350,000 buyers. By 2017 the
-          median game was stuck in SteamSpy's smallest owner bucket — fewer
-          than 20,000 owners — and has stayed there every year since. By 2019
-          the 25th and 75th percentiles had collapsed to the floor too: the
-          entire middle class of games disappeared.
+          So far the story has been about volume and audience. But are the
+          games themselves worse than they used to be — or is the flood
+          drowning <em>good</em> games as readily as bad ones? This section
+          will use Metacritic scores and Steam review ratios to test that.
         </p>
       </div>
 
-      <div class="scene__viz" id="scene-median-viz"></div>
+      <div class="scene__viz">
+        <div class="scene-placeholder">
+          <strong>Coming soon</strong>
+          Quality-over-time chart, in progress.
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" id="scene-find-your-game">
+      <div class="scene__intro">
+        <h2 class="scene__title">4. Find Your Game</h2>
+        <p class="scene__lead">
+          Pick a Steam game you remember and see where it fits in its
+          release-year cohort. Was it one of the eight phenomena from its
+          year, or one of the thousands swept under?
+        </p>
+      </div>
+
+      <div class="scene__viz" id="scene-find-your-game-viz"></div>
 
       <p class="scene__footnote">
-        Owner counts come from SteamSpy's bucketed estimates; the smallest
-        bucket midpoint is 10,000. Median and percentile values are computed
-        only over games with a positive owner estimate (excluding SteamSpy's
-        "no data" rows). The engagement chart counts a release as "still being
-        played" if it has any non-zero two-week median playtime in the
-        snapshot — an extremely loose bar that 2018+ cohorts mostly fail to
-        clear.
+        Search runs across roughly 113,500 cleaned Steam games. Owner counts
+        come from SteamSpy's bucketed estimates and may show "no estimate
+        available" for games SteamSpy can't measure. Cohort percentages are
+        computed against all games released in the same year.
       </p>
+    </section>
+
+    <section class="scene" id="scene-test-hypothetical">
+      <div class="scene__intro">
+        <h2 class="scene__title">5. Test Your Hypothetical Game</h2>
+        <p class="scene__lead">
+          Imagine you're shipping a Steam game today. Set its traits — release
+          year, price, indie or AAA, language coverage — and see where it
+          would likely land in the historical owner distribution.
+        </p>
+      </div>
+
+      <div class="scene__viz">
+        <div class="scene-placeholder">
+          <strong>Coming soon</strong>
+          Hypothetical-game simulator, in progress.
+        </div>
+      </div>
     </section>
   </main>
 

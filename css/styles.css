@@ -352,180 +352,238 @@ a:hover { text-decoration: underline; }
   font-weight: 700;
 }
 
-/* ---------- Scene 3: The Median Crashed ---------- */
+/* ---------- Scene 4: Find Your Game ---------- */
 
-.median-controls {
+.find-your-game {
+  position: relative;
+}
+
+.fyg-search {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.fyg-search__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--fg);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.fyg-search__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(33, 113, 181, 0.15);
+}
+
+.fyg-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: calc(0.5rem + 3.1rem);
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 5;
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.fyg-results[hidden] { display: none; }
+
+.fyg-result {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 0.75rem;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f4f4f4;
 }
 
-.median-controls__group {
-  display: inline-flex;
+.fyg-result:last-child { border-bottom: none; }
+.fyg-result:hover { background: #f6f9fc; }
+
+.fyg-result__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fg);
+}
+
+.fyg-result__year {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.fyg-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
   align-items: center;
-  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
 }
 
-.median-controls__label {
-  font-size: 0.85rem;
+.fyg-suggestions__label {
   color: var(--muted);
   margin-right: 0.25rem;
 }
 
-.median-controls__btn {
-  padding: 0.35rem 0.85rem;
+.fyg-suggestion {
+  padding: 0.25rem 0.7rem;
   font-size: 0.85rem;
   font-family: inherit;
-  color: var(--muted-strong);
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 999px;
+  color: var(--muted-strong);
   cursor: pointer;
   transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
 }
 
-.median-controls__btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.median-controls__btn.is-active {
+.fyg-suggestion:hover {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
 }
 
-.median-chart svg,
-.engagement-chart svg {
-  display: block;
-  width: 100%;
-  height: auto;
+.fyg-detail__empty {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  background: #fafafa;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
 }
 
-.median-chart .axis text,
-.engagement-chart .axis text {
-  font-size: 11px;
-  fill: var(--muted-strong);
-  font-family: inherit;
+.fyg-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
 }
 
-.median-chart .axis-label,
-.engagement-chart .axis-label {
-  font-size: 12px;
-  fill: var(--muted);
+.fyg-card__header {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
 }
 
-.median-chart .annotation-label {
-  font-size: 11px;
-  fill: var(--muted-strong);
-  font-weight: 500;
-}
-
-.median-chart .median-band {
-  transition: opacity 380ms ease;
-}
-
-.median-bridge {
-  margin: 1.5rem 0 1rem;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--border);
-}
-
-.median-bridge__title {
-  margin: 0 0 0.4rem;
-  font-size: 1.15rem;
+.fyg-card__name {
+  margin: 0 0 0.25rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--fg);
 }
 
-.median-bridge__lead {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--muted-strong);
-  max-width: 720px;
+.fyg-card__meta {
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 
-/* Shared tooltip used by both Scene 3 charts. */
-.median-tooltip {
-  position: absolute;
-  z-index: 10;
-  padding: 0.6rem 0.8rem;
-  background: #1a1a1a;
-  color: #fff;
-  border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-  font-size: 0.82rem;
-  line-height: 1.4;
-  pointer-events: none;
-  min-width: 220px;
-  max-width: 320px;
-}
-
-.median-tooltip[hidden] {
-  display: none;
-}
-
-.median-tooltip__title {
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-  font-size: 0.85rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  padding-bottom: 0.3rem;
-}
-
-.median-tooltip__rows {
+.fyg-card__stats {
   display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 0.2rem 0.7rem;
-  font-variant-numeric: tabular-nums;
-  font-size: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.median-tooltip__row-label {
-  color: rgba(255, 255, 255, 0.78);
+.fyg-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
-.median-tooltip__row-value {
-  text-align: right;
-  color: #fff;
-}
-
-.median-tooltip__examples-label {
-  margin-top: 0.6rem;
-  margin-bottom: 0.25rem;
+.fyg-stat__label {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+  color: var(--muted);
 }
 
-.median-tooltip__examples {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.15rem;
-  font-size: 0.78rem;
-  font-variant-numeric: tabular-nums;
+.fyg-stat__value {
+  font-size: 0.95rem;
+  color: var(--fg);
 }
 
-.median-tooltip__examples li {
+.fyg-cohort {
+  margin-top: 1rem;
+}
+
+.fyg-cohort__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted-strong);
+  margin-bottom: 0.5rem;
+}
+
+.fyg-cohort__bar svg {
+  display: block;
+  width: 100%;
+}
+
+.fyg-cohort__legend {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.4rem 1rem;
+  margin-top: 0.75rem;
+}
+
+.fyg-cohort__legend-item {
+  display: grid;
+  grid-template-columns: 14px 1fr auto;
+  align-items: center;
   gap: 0.5rem;
-  align-items: baseline;
+  font-size: 0.85rem;
+  color: var(--muted-strong);
 }
 
-.median-tooltip__example-name {
-  color: rgba(255, 255, 255, 0.92);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.fyg-cohort__legend-item.is-selected {
+  font-weight: 700;
+  color: var(--fg);
 }
 
-.median-tooltip__example-owners {
-  color: rgba(255, 255, 255, 0.6);
+.fyg-cohort__legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.fyg-cohort__legend-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+/* ---------- Scene placeholders (3, 5) ---------- */
+
+.scene-placeholder {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.scene-placeholder strong {
+  display: block;
+  font-style: normal;
+  color: var(--muted-strong);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 /* ---------- Footer ---------- */
