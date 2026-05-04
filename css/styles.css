@@ -487,6 +487,25 @@ strong { color: var(--fg-bright); }
   color: var(--bg-deep);
 }
 
+.fyg-suggestions__divider {
+  color: var(--muted);
+  margin: 0 0.25rem;
+  font-size: 0.85rem;
+}
+
+.fyg-suggestion--random {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.fyg-suggestion--random:hover {
+  background: var(--accent);
+  color: var(--bg-deep);
+  border-color: var(--accent);
+}
+
 .fyg-detail__empty {
   padding: 2.5rem 1rem;
   text-align: center;

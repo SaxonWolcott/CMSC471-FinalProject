@@ -22,6 +22,44 @@ const SUGGESTIONS = [
   "Baldur's Gate 3",
 ];
 const RESULT_LIMIT = 10;
+
+// Filter out adult/explicit titles from the searchable catalog. Word-bounded
+// regex so "popcorn" isn't caught by "porn", "hexxen" isn't caught by "xxx",
+// etc. Conservative on purpose: better to drop a few borderline titles than
+// to surface explicit content from the random button or autocomplete in an
+// academic project. Identity terms (gay, queer) and general profanity are
+// intentionally NOT in this list.
+const VULGAR_PATTERNS = [
+  /\bporn\b/i,
+  /\bpornography\b/i,
+  /\bhentai\b/i,
+  /\bnsfw\b/i,
+  /\bxxx\b/i,
+  /\beroge\b/i,
+  /\berotic\b/i,
+  /\bfutanari\b/i,
+  /\byiff\b/i,
+  /\bahegao\b/i,
+  /\becchi\b/i,
+  /\bbdsm\b/i,
+  /\bnudist\b/i,
+  /\blewd\b/i,
+  /\bhorny\b/i,
+  /\borgy\b/i,
+  /\borgies\b/i,
+  /\bmasturbat\w*/i,
+  /\bwaifu\b/i,
+  /\bsex\b/i,
+  /\bsexy\b/i,
+];
+
+function isCleanName(name) {
+  const s = String(name || "");
+  for (const re of VULGAR_PATTERNS) {
+    if (re.test(s)) return false;
+  }
+  return true;
+}
 const TIER_ORDER = TIERS; // bottom-to-top: drowned → phenomenon
 const TIER_COMPARE_HIGHER = (() => {
   // Map a tier name to a numeric rank so we can compute "share of cohort
@@ -35,7 +73,7 @@ export function renderFindYourGame(host, packed) {
   host.innerHTML = "";
   host.classList.add("find-your-game");
 
-  const games = unpack(packed);
+  const games = unpack(packed).filter((g) => isCleanName(g.name));
   // Pre-compute lowercase search keys once, not every keystroke.
   for (const g of games) g._search = g.name.toLowerCase();
   // Group by year to make cohort lookups O(1).
@@ -47,17 +85,28 @@ export function renderFindYourGame(host, packed) {
   const detailHost = host.querySelector(".fyg-detail");
   const suggestionsHost = host.querySelector(".fyg-suggestions");
 
-  // Initial empty state plus quick-pick suggestion chips.
+  // Initial empty state plus quick-pick suggestion chips and a Random button.
   renderEmpty(detailHost);
-  renderSuggestions(suggestionsHost, SUGGESTIONS, (name) => {
+  const pickByName = (name) => {
     searchInput.value = name;
     searchInput.dispatchEvent(new Event("input"));
-    // After triggering search, auto-select the top match for that suggestion.
     setTimeout(() => {
       const first = resultsList.querySelector(".fyg-result");
       if (first) first.click();
     }, 0);
-  });
+  };
+  const pickRandom = () => {
+    // Random within games that have a measurable owner estimate (skip
+    // SteamSpy "no data" entries so the user doesn't keep rolling blanks).
+    const candidates = games.filter((g) => g.ownersMid > 0);
+    if (!candidates.length) return;
+    const game = candidates[Math.floor(Math.random() * candidates.length)];
+    searchInput.value = game.name;
+    lastQuery = game.name;
+    resultsList.hidden = true;
+    renderDetail(detailHost, game, gamesByYear);
+  };
+  renderSuggestions(suggestionsHost, SUGGESTIONS, pickByName, pickRandom);
 
   let lastQuery = "";
   searchInput.addEventListener("input", () => {
@@ -140,7 +189,7 @@ function renderEmpty(host) {
   `;
 }
 
-function renderSuggestions(host, names, onPick) {
+function renderSuggestions(host, names, onPick, onRandom) {
   host.innerHTML =
     `<span class="fyg-suggestions__label">Try:</span>` +
     names
@@ -148,10 +197,14 @@ function renderSuggestions(host, names, onPick) {
         (n) =>
           `<button type="button" class="fyg-suggestion" data-name="${escapeHtml(n)}">${escapeHtml(n)}</button>`,
       )
-      .join("");
-  host.querySelectorAll(".fyg-suggestion").forEach((btn) => {
+      .join("") +
+    `<span class="fyg-suggestions__divider">or</span>` +
+    `<button type="button" class="fyg-suggestion fyg-suggestion--random">🎲 Random</button>`;
+  host.querySelectorAll(".fyg-suggestion[data-name]").forEach((btn) => {
     btn.addEventListener("click", () => onPick(btn.dataset.name));
   });
+  const randomBtn = host.querySelector(".fyg-suggestion--random");
+  if (randomBtn) randomBtn.addEventListener("click", onRandom);
 }
 
 // ---------------------------------------------------------------------------
