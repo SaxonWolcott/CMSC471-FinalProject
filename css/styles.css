@@ -54,6 +54,12 @@ strong { color: var(--fg-bright); }
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 5rem 1.5rem 3rem;
+  animation: hero-fade-in 900ms ease-out 100ms backwards;
+}
+
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .hero h1 {
@@ -79,6 +85,51 @@ strong { color: var(--fg-bright); }
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 4rem 1.5rem;
+}
+
+/* Scrollama-driven scene entrance.
+   When body.has-scrollama is set (main.js verified scrollama loaded), each
+   scene starts hidden and slid down 32px, then fades and slides into place
+   when the scrollama trigger fires (.scene--in-view class).
+   Without body.has-scrollama (graceful fallback), scenes are always visible. */
+body.has-scrollama .scene {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 750ms ease-out, transform 750ms ease-out;
+  will-change: opacity, transform;
+}
+
+body.has-scrollama .scene.scene--in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Children stagger inside the scene for a small cascade — title first,
+   then viz, then footnote — once the scene is in view. */
+body.has-scrollama .scene .scene__intro,
+body.has-scrollama .scene .scene__viz,
+body.has-scrollama .scene .scene__footnote {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+
+body.has-scrollama .scene--in-view .scene__intro {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 80ms;
+}
+
+body.has-scrollama .scene--in-view .scene__viz {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 220ms;
+}
+
+body.has-scrollama .scene--in-view .scene__footnote {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 360ms;
 }
 
 .scene__intro {
