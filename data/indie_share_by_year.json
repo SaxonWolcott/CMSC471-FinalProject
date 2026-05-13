@@ -1,7 +1,7 @@
 [
   {
     "year": 2004,
-    "total": 6,
+    "total": 5,
     "genre_indie_share": 0,
     "tag_indie_share": 0,
     "any_indie_flavor_tag_share": 0
@@ -15,143 +15,143 @@
   },
   {
     "year": 2006,
-    "total": 69,
-    "genre_indie_share": 0.15942028985507245,
-    "tag_indie_share": 0.2028985507246377,
-    "any_indie_flavor_tag_share": 0.463768115942029
+    "total": 63,
+    "genre_indie_share": 0.15873015873015872,
+    "tag_indie_share": 0.20634920634920634,
+    "any_indie_flavor_tag_share": 0.49206349206349204
   },
   {
     "year": 2007,
-    "total": 90,
-    "genre_indie_share": 0.07777777777777778,
-    "tag_indie_share": 0.1,
-    "any_indie_flavor_tag_share": 0.23333333333333334
+    "total": 85,
+    "genre_indie_share": 0.058823529411764705,
+    "tag_indie_share": 0.08235294117647059,
+    "any_indie_flavor_tag_share": 0.2235294117647059
   },
   {
     "year": 2008,
-    "total": 156,
-    "genre_indie_share": 0.16666666666666666,
-    "tag_indie_share": 0.1794871794871795,
-    "any_indie_flavor_tag_share": 0.38461538461538464
+    "total": 151,
+    "genre_indie_share": 0.17218543046357615,
+    "tag_indie_share": 0.18543046357615894,
+    "any_indie_flavor_tag_share": 0.3841059602649007
   },
   {
     "year": 2009,
-    "total": 317,
-    "genre_indie_share": 0.19873817034700317,
-    "tag_indie_share": 0.19242902208201892,
-    "any_indie_flavor_tag_share": 0.41324921135646686
+    "total": 304,
+    "genre_indie_share": 0.20394736842105263,
+    "tag_indie_share": 0.19736842105263158,
+    "any_indie_flavor_tag_share": 0.4276315789473684
   },
   {
     "year": 2010,
-    "total": 254,
-    "genre_indie_share": 0.2677165354330709,
-    "tag_indie_share": 0.2992125984251969,
-    "any_indie_flavor_tag_share": 0.49606299212598426
+    "total": 241,
+    "genre_indie_share": 0.27385892116182575,
+    "tag_indie_share": 0.3070539419087137,
+    "any_indie_flavor_tag_share": 0.5145228215767634
   },
   {
     "year": 2011,
-    "total": 258,
-    "genre_indie_share": 0.4108527131782946,
-    "tag_indie_share": 0.4108527131782946,
-    "any_indie_flavor_tag_share": 0.5348837209302325
+    "total": 250,
+    "genre_indie_share": 0.42,
+    "tag_indie_share": 0.42,
+    "any_indie_flavor_tag_share": 0.536
   },
   {
     "year": 2012,
-    "total": 320,
-    "genre_indie_share": 0.51875,
-    "tag_indie_share": 0.50625,
-    "any_indie_flavor_tag_share": 0.615625
+    "total": 317,
+    "genre_indie_share": 0.5205047318611987,
+    "tag_indie_share": 0.5078864353312302,
+    "any_indie_flavor_tag_share": 0.6182965299684543
   },
   {
     "year": 2013,
-    "total": 465,
-    "genre_indie_share": 0.556989247311828,
-    "tag_indie_share": 0.556989247311828,
-    "any_indie_flavor_tag_share": 0.6602150537634408
+    "total": 462,
+    "genre_indie_share": 0.5562770562770563,
+    "tag_indie_share": 0.5562770562770563,
+    "any_indie_flavor_tag_share": 0.658008658008658
   },
   {
     "year": 2014,
-    "total": 1518,
-    "genre_indie_share": 0.5770750988142292,
-    "tag_indie_share": 0.5889328063241107,
-    "any_indie_flavor_tag_share": 0.7325428194993412
+    "total": 1512,
+    "genre_indie_share": 0.5773809523809523,
+    "tag_indie_share": 0.58994708994709,
+    "any_indie_flavor_tag_share": 0.7341269841269841
   },
   {
     "year": 2015,
-    "total": 2511,
-    "genre_indie_share": 0.7287933094384708,
-    "tag_indie_share": 0.7319792911190761,
-    "any_indie_flavor_tag_share": 0.8458781362007168
+    "total": 2495,
+    "genre_indie_share": 0.7314629258517034,
+    "tag_indie_share": 0.7350701402805612,
+    "any_indie_flavor_tag_share": 0.8464929859719439
   },
   {
     "year": 2016,
-    "total": 4124,
-    "genre_indie_share": 0.7065955383123181,
-    "tag_indie_share": 0.7131425800193987,
-    "any_indie_flavor_tag_share": 0.8440834141610087
+    "total": 4123,
+    "genre_indie_share": 0.706524375454766,
+    "tag_indie_share": 0.7133155469318457,
+    "any_indie_flavor_tag_share": 0.844288139704099
   },
   {
     "year": 2017,
-    "total": 5897,
-    "genre_indie_share": 0.7135831778870613,
-    "tag_indie_share": 0.7125657113786671,
-    "any_indie_flavor_tag_share": 0.8312701373579786
+    "total": 5891,
+    "genre_indie_share": 0.7136309624851468,
+    "tag_indie_share": 0.7126124596842641,
+    "any_indie_flavor_tag_share": 0.8314377864539128
   },
   {
     "year": 2018,
-    "total": 7425,
-    "genre_indie_share": 0.7709090909090909,
-    "tag_indie_share": 0.7457239057239057,
-    "any_indie_flavor_tag_share": 0.8429629629629629
+    "total": 7396,
+    "genre_indie_share": 0.772850189291509,
+    "tag_indie_share": 0.7477014602487831,
+    "any_indie_flavor_tag_share": 0.8453217955651704
   },
   {
     "year": 2019,
-    "total": 7204,
-    "genre_indie_share": 0.7622154358689617,
-    "tag_indie_share": 0.6968350916157691,
-    "any_indie_flavor_tag_share": 0.7978900610771793
+    "total": 7199,
+    "genre_indie_share": 0.7623281011251563,
+    "tag_indie_share": 0.6970412557299625,
+    "any_indie_flavor_tag_share": 0.7981664120016669
   },
   {
     "year": 2020,
-    "total": 8654,
-    "genre_indie_share": 0.7505199907557198,
-    "tag_indie_share": 0.6170556967876126,
-    "any_indie_flavor_tag_share": 0.7933903397272938
+    "total": 8643,
+    "genre_indie_share": 0.7503181765590652,
+    "tag_indie_share": 0.6167997223186393,
+    "any_indie_flavor_tag_share": 0.7933587874580585
   },
   {
     "year": 2021,
-    "total": 10281,
-    "genre_indie_share": 0.7078105242680673,
-    "tag_indie_share": 0.43458807508997177,
-    "any_indie_flavor_tag_share": 0.6933177706448789
+    "total": 10268,
+    "genre_indie_share": 0.7075379820802493,
+    "tag_indie_share": 0.4344565640825867,
+    "any_indie_flavor_tag_share": 0.6933190494740943
   },
   {
     "year": 2022,
-    "total": 11270,
-    "genre_indie_share": 0.6877551020408164,
-    "tag_indie_share": 0.37062999112688555,
-    "any_indie_flavor_tag_share": 0.6242236024844721
+    "total": 11252,
+    "genre_indie_share": 0.6878777106292214,
+    "tag_indie_share": 0.3706896551724138,
+    "any_indie_flavor_tag_share": 0.6243334518307856
   },
   {
     "year": 2023,
-    "total": 13172,
-    "genre_indie_share": 0.6762830245976313,
-    "tag_indie_share": 0.3380655936835712,
-    "any_indie_flavor_tag_share": 0.5926207105982387
+    "total": 13149,
+    "genre_indie_share": 0.6766294014753974,
+    "tag_indie_share": 0.33827667503232184,
+    "any_indie_flavor_tag_share": 0.592972849646361
   },
   {
     "year": 2024,
-    "total": 17876,
-    "genre_indie_share": 0.7039046766614455,
-    "tag_indie_share": 0.3384985455359141,
-    "any_indie_flavor_tag_share": 0.5610315506824793
+    "total": 17832,
+    "genre_indie_share": 0.7042395693135935,
+    "tag_indie_share": 0.33882907133243606,
+    "any_indie_flavor_tag_share": 0.561630776132795
   },
   {
     "year": 2025,
-    "total": 21564,
-    "genre_indie_share": 0.7097477276943053,
-    "tag_indie_share": 0.12706362455945094,
-    "any_indie_flavor_tag_share": 0.216471897607123
+    "total": 21522,
+    "genre_indie_share": 0.7096924077687947,
+    "tag_indie_share": 0.1272651240591023,
+    "any_indie_flavor_tag_share": 0.2167549484248676
   },
   {
     "year": 2026,

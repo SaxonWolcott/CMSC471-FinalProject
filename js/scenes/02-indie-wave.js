@@ -1,8 +1,9 @@
 // Scene 2: The Indie Wave.
 // Multi-line chart of genre share over time. Each featured genre is one line:
-// "share of that year's releases tagged with this genre". Lines aren't
-// mutually exclusive (most Steam games carry 2-3 genre tags), so the lines
-// can cross and don't sum to 100% — the small footnote on the page flags this.
+// "share of that year's releases listed in this genre". Genres aren't
+// mutually exclusive (Steam's publisher-set genres typically include 2-3 per
+// game — distinct from the community-applied tags used in Scene 4), so the
+// lines can cross and don't sum to 100% — the page footnote flags this.
 //
 // One genre is highlighted at a time in the Scene-1 blue; the others render
 // as muted gray context. Right-edge labels are clickable; clicking a label
@@ -121,7 +122,7 @@ function createChart(host, tooltip, byYear) {
     .attr("x", -innerHeight / 2)
     .attr("y", -44)
     .attr("text-anchor", "middle")
-    .text("% of year's releases tagged with genre");
+    .text("% of year's releases listed in genre");
 
   // Series: one entry per featured genre, with year/value points.
   const seriesByGenre = FEATURED_GENRES.map((genre) => ({

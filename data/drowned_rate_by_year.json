@@ -1,7 +1,7 @@
 [
   {
     "year": 2004,
-    "total": 6,
+    "total": 5,
     "drowned": 0,
     "drowned_rate": 0
   },
@@ -13,123 +13,123 @@
   },
   {
     "year": 2006,
-    "total": 69,
-    "drowned": 3,
-    "drowned_rate": 0.043478260869565216
+    "total": 63,
+    "drowned": 2,
+    "drowned_rate": 0.031746031746031744
   },
   {
     "year": 2007,
-    "total": 90,
-    "drowned": 4,
-    "drowned_rate": 0.044444444444444446
+    "total": 85,
+    "drowned": 3,
+    "drowned_rate": 0.03529411764705882
   },
   {
     "year": 2008,
-    "total": 156,
-    "drowned": 27,
-    "drowned_rate": 0.17307692307692307
+    "total": 151,
+    "drowned": 26,
+    "drowned_rate": 0.17218543046357615
   },
   {
     "year": 2009,
-    "total": 317,
-    "drowned": 68,
-    "drowned_rate": 0.21451104100946372
+    "total": 304,
+    "drowned": 58,
+    "drowned_rate": 0.19078947368421054
   },
   {
     "year": 2010,
-    "total": 254,
-    "drowned": 56,
-    "drowned_rate": 0.2204724409448819
+    "total": 241,
+    "drowned": 50,
+    "drowned_rate": 0.2074688796680498
   },
   {
     "year": 2011,
-    "total": 258,
-    "drowned": 29,
-    "drowned_rate": 0.1124031007751938
+    "total": 250,
+    "drowned": 24,
+    "drowned_rate": 0.096
   },
   {
     "year": 2012,
-    "total": 320,
-    "drowned": 20,
-    "drowned_rate": 0.0625
+    "total": 317,
+    "drowned": 18,
+    "drowned_rate": 0.056782334384858045
   },
   {
     "year": 2013,
-    "total": 465,
-    "drowned": 54,
-    "drowned_rate": 0.11612903225806452
+    "total": 462,
+    "drowned": 52,
+    "drowned_rate": 0.11255411255411256
   },
   {
     "year": 2014,
-    "total": 1518,
-    "drowned": 323,
-    "drowned_rate": 0.21277997364953888
+    "total": 1512,
+    "drowned": 320,
+    "drowned_rate": 0.21164021164021163
   },
   {
     "year": 2015,
-    "total": 2511,
-    "drowned": 958,
-    "drowned_rate": 0.38152130625248903
+    "total": 2495,
+    "drowned": 945,
+    "drowned_rate": 0.3787575150300601
   },
   {
     "year": 2016,
-    "total": 4124,
-    "drowned": 2037,
-    "drowned_rate": 0.4939379243452958
+    "total": 4123,
+    "drowned": 2036,
+    "drowned_rate": 0.49381518311908806
   },
   {
     "year": 2017,
-    "total": 5897,
-    "drowned": 3791,
-    "drowned_rate": 0.6428692555536714
+    "total": 5891,
+    "drowned": 3786,
+    "drowned_rate": 0.6426752673569852
   },
   {
     "year": 2018,
-    "total": 7425,
-    "drowned": 5314,
-    "drowned_rate": 0.7156902356902357
+    "total": 7396,
+    "drowned": 5285,
+    "drowned_rate": 0.7145754461871282
   },
   {
     "year": 2019,
-    "total": 7204,
-    "drowned": 5407,
-    "drowned_rate": 0.7505552470849528
+    "total": 7199,
+    "drowned": 5402,
+    "drowned_rate": 0.7503819974996527
   },
   {
     "year": 2020,
-    "total": 8654,
-    "drowned": 6247,
-    "drowned_rate": 0.72186272244049
+    "total": 8643,
+    "drowned": 6239,
+    "drowned_rate": 0.7218558370936018
   },
   {
     "year": 2021,
-    "total": 10281,
-    "drowned": 7662,
-    "drowned_rate": 0.7452582433615407
+    "total": 10268,
+    "drowned": 7649,
+    "drowned_rate": 0.7449357226334242
   },
   {
     "year": 2022,
-    "total": 11270,
-    "drowned": 8875,
-    "drowned_rate": 0.787488908606921
+    "total": 11252,
+    "drowned": 8859,
+    "drowned_rate": 0.7873266974760043
   },
   {
     "year": 2023,
-    "total": 13172,
-    "drowned": 10921,
-    "drowned_rate": 0.8291071970847251
+    "total": 13149,
+    "drowned": 10901,
+    "drowned_rate": 0.829036428625751
   },
   {
     "year": 2024,
-    "total": 17876,
-    "drowned": 15676,
-    "drowned_rate": 0.87692996196017
+    "total": 17832,
+    "drowned": 15637,
+    "drowned_rate": 0.8769066846119336
   },
   {
     "year": 2025,
-    "total": 21564,
-    "drowned": 20596,
-    "drowned_rate": 0.9551103691337414
+    "total": 21522,
+    "drowned": 20555,
+    "drowned_rate": 0.9550692314840629
   },
   {
     "year": 2026,

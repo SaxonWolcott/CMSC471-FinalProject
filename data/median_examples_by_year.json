@@ -4,11 +4,6 @@
     "median_owners": 15000000,
     "examples": [
       {
-        "name": "Counter-Strike: Condition Zero",
-        "appId": "100",
-        "owners_mid": 15000000
-      },
-      {
         "name": "Counter-Strike: Source",
         "appId": "240",
         "owners_mid": 15000000
@@ -16,6 +11,11 @@
       {
         "name": "Half-Life 2",
         "appId": "220",
+        "owners_mid": 15000000
+      },
+      {
+        "name": "Half-Life 2: Deathmatch",
+        "appId": "320",
         "owners_mid": 15000000
       }
     ]
@@ -64,21 +64,21 @@
   },
   {
     "year": 2007,
-    "median_owners": 550000,
+    "median_owners": 750000,
     "examples": [
-      {
-        "name": "Alpha Prime",
-        "appId": "2590",
-        "owners_mid": 350000
-      },
-      {
-        "name": "Arx Fatalis",
-        "appId": "1700",
-        "owners_mid": 350000
-      },
       {
         "name": "Battlestations: Midway",
         "appId": "6870",
+        "owners_mid": 750000
+      },
+      {
+        "name": "Call of Juarez",
+        "appId": "3020",
+        "owners_mid": 750000
+      },
+      {
+        "name": "Civilization IV: Beyond the Sword",
+        "appId": "8800",
         "owners_mid": 750000
       }
     ]

@@ -1,122 +1,122 @@
 [
   {
     "tag": "Singleplayer",
-    "count": 50117
+    "count": 49993
   },
   {
     "tag": "Indie",
-    "count": 48381
+    "count": 48315
   },
   {
     "tag": "Action",
-    "count": 36660
+    "count": 36552
   },
   {
     "tag": "Casual",
-    "count": 36449
+    "count": 36404
   },
   {
     "tag": "Adventure",
-    "count": 35022
+    "count": 34932
   },
   {
     "tag": "2D",
-    "count": 26670
+    "count": 26640
   },
   {
     "tag": "3D",
-    "count": 17924
+    "count": 17898
   },
   {
     "tag": "Simulation",
-    "count": 17816
+    "count": 17781
   },
   {
     "tag": "Strategy",
-    "count": 17772
+    "count": 17732
   },
   {
     "tag": "Puzzle",
-    "count": 16299
+    "count": 16252
   },
   {
     "tag": "Atmospheric",
-    "count": 16165
+    "count": 16103
   },
   {
     "tag": "RPG",
-    "count": 15651
+    "count": 15628
   },
   {
     "tag": "Colorful",
-    "count": 14214
+    "count": 14205
   },
   {
     "tag": "Pixel Graphics",
-    "count": 13815
+    "count": 13805
   },
   {
     "tag": "Story Rich",
-    "count": 13233
+    "count": 13192
   },
   {
     "tag": "Exploration",
-    "count": 13167
+    "count": 13131
   },
   {
     "tag": "Cute",
-    "count": 12615
+    "count": 12608
   },
   {
     "tag": "First-Person",
-    "count": 12231
+    "count": 12184
   },
   {
     "tag": "Arcade",
-    "count": 11471
+    "count": 11458
   },
   {
     "tag": "Fantasy",
-    "count": 11441
+    "count": 11423
   },
   {
     "tag": "Early Access",
-    "count": 10216
+    "count": 10207
   },
   {
     "tag": "Multiplayer",
-    "count": 10106
+    "count": 10062
   },
   {
     "tag": "Funny",
-    "count": 9819
+    "count": 9808
   },
   {
     "tag": "Horror",
-    "count": 9625
+    "count": 9600
   },
   {
     "tag": "Action-Adventure",
-    "count": 9556
+    "count": 9517
   },
   {
     "tag": "Retro",
-    "count": 9222
+    "count": 9214
   },
   {
     "tag": "Shooter",
-    "count": 9175
+    "count": 9113
   },
   {
     "tag": "Relaxing",
-    "count": 9072
+    "count": 9062
   },
   {
     "tag": "Family Friendly",
-    "count": 8876
+    "count": 8869
   },
   {
     "tag": "Platformer",
-    "count": 8771
+    "count": 8755
   }
 ]

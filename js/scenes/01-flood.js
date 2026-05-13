@@ -6,13 +6,11 @@
 //   - Counts: bar height = absolute release count for that year. Best for
 //     reading the release explosion.
 // Annotations mark Steam Greenlight (2012) and Steam Direct (2017) with
-// hover tooltips. Hatching on years still accumulating owners.
+// hover tooltips.
 
 import { TIERS, TIER_COLORS, TIER_LABELS, TIER_DEFINITIONS } from "../lib/colors.js";
 
 // d3 is loaded as a global from the CDN script tag in index.html.
-
-const RECENT_YEARS_TO_HATCH = [2024, 2025];
 
 const ANNOTATIONS = [
   {
@@ -124,23 +122,6 @@ function createChart(host, tooltip, data) {
       "Stacked bar chart of Steam releases by year, split by SteamSpy owner-count tier",
     );
 
-  // Hatch pattern for years still accumulating owners.
-  svg
-    .append("defs")
-    .append("pattern")
-    .attr("id", "snapshot-bias-hatch")
-    .attr("patternUnits", "userSpaceOnUse")
-    .attr("width", 6)
-    .attr("height", 6)
-    .attr("patternTransform", "rotate(45)")
-    .append("line")
-    .attr("x1", 0)
-    .attr("y1", 0)
-    .attr("x2", 0)
-    .attr("y2", 6)
-    .attr("stroke", "rgba(255,255,255,0.45)")
-    .attr("stroke-width", 2);
-
   const g = svg
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -158,9 +139,6 @@ function createChart(host, tooltip, data) {
   const tierGroups = TIERS.map((tier) =>
     g.append("g").attr("fill", TIER_COLORS[tier]).attr("data-tier", tier),
   );
-
-  // Hatch overlay sits above the bars; updated on mode change so it tracks bar tops.
-  const hatchGroup = g.append("g").attr("class", "hatch-overlay");
 
   // Per-bar invisible hit-targets for hover tooltips. Sized to the year's full
   // column (not just the bar) so hovering empty space above a short bar still
@@ -190,6 +168,10 @@ function createChart(host, tooltip, data) {
     .call((sel) => sel.selectAll(".tick text").attr("dy", "1.2em"));
 
   // Annotations (static positions; tooltips wired below).
+  // Hover hit-target is the LABEL TEXT ONLY — the dashed line and the area
+  // around it ignore pointer events (pointer-events: none) so hovering on or
+  // near the 2012 / 2017 bars still triggers the bar tooltip underneath. The
+  // policy story is small; bar data is the headline.
   const annotG = g.append("g").attr("class", "annotations");
   for (const a of ANNOTATIONS) {
     const x = xScale(a.year) + xScale.bandwidth() / 2;
@@ -202,7 +184,8 @@ function createChart(host, tooltip, data) {
       .attr("stroke", "#c7d5e0")
       .attr("stroke-width", 1)
       .attr("stroke-dasharray", "3,3")
-      .attr("class", "annotation-line");
+      .attr("class", "annotation-line")
+      .style("pointer-events", "none");
 
     const labelEl = annotG
       .append("text")
@@ -210,32 +193,21 @@ function createChart(host, tooltip, data) {
       .attr("y", -16)
       .attr("text-anchor", "middle")
       .attr("class", "annotation-label")
-      .text(`${a.label} (${a.year})`);
-
-    // Wide invisible hit-target so tiny lines aren't a UX nightmare.
-    const hit = annotG
-      .append("rect")
-      .attr("x", x - 18)
-      .attr("y", -28)
-      .attr("width", 36)
-      .attr("height", innerHeight + 30)
-      .attr("fill", "transparent")
       .style("cursor", "help")
+      .text(`${a.label} (${a.year})`)
       .datum(a);
 
-    const onEnter = (event, datum) => {
-      lineEl.attr("stroke", "#ffffff").attr("stroke-width", 1.5);
-      labelEl.attr("fill", "#ffffff");
-      showTooltip(tooltip, host, x, datum);
-    };
-    const onLeave = () => {
-      lineEl.attr("stroke", "#c7d5e0").attr("stroke-width", 1);
-      labelEl.attr("fill", null);
-      hideTooltip(tooltip);
-    };
-    hit.on("mouseenter", onEnter).on("mouseleave", onLeave);
-    lineEl.on("mouseenter", onEnter).on("mouseleave", onLeave);
-    labelEl.on("mouseenter", onEnter).on("mouseleave", onLeave);
+    labelEl
+      .on("mouseenter", (event, datum) => {
+        lineEl.attr("stroke", "#ffffff").attr("stroke-width", 1.5);
+        labelEl.attr("fill", "#ffffff");
+        showTooltip(tooltip, host, x, datum);
+      })
+      .on("mouseleave", () => {
+        lineEl.attr("stroke", "#c7d5e0").attr("stroke-width", 1);
+        labelEl.attr("fill", null);
+        hideTooltip(tooltip);
+      });
   }
 
   function update(animate) {
@@ -282,29 +254,6 @@ function createChart(host, tooltip, data) {
         .attr("y", (d) => yScale(d[1]))
         .attr("height", (d) => Math.max(0, yScale(d[0]) - yScale(d[1])));
     });
-
-    const hatchData = data.filter(
-      (d) => RECENT_YEARS_TO_HATCH.includes(d.year) && d.total > 0,
-    );
-    const hatchSel = hatchGroup
-      .selectAll("rect")
-      .data(hatchData, (d) => d.year);
-
-    hatchSel
-      .join(
-        (enter) =>
-          enter
-            .append("rect")
-            .attr("x", (d) => xScale(d.year))
-            .attr("width", xScale.bandwidth())
-            .attr("fill", "url(#snapshot-bias-hatch)")
-            .attr("pointer-events", "none")
-            .attr("y", (d) => barTopY(d, mode, yScale))
-            .attr("height", (d) => innerHeight - barTopY(d, mode, yScale)),
-      )
-      .transition(animate ? t : d3.transition().duration(0))
-      .attr("y", (d) => barTopY(d, mode, yScale))
-      .attr("height", (d) => innerHeight - barTopY(d, mode, yScale));
 
     // (Re)bind the per-bar hover overlays. Their geometry (x/width/full
     // chart height) doesn't change between modes, but their hover handlers

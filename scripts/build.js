@@ -99,6 +99,45 @@ function parseLangsList(s) {
     .filter(Boolean);
 }
 
+// Owner-tier classification with a confidence floor on each tier.
+//
+// SteamSpy's owner estimates are based on profile scraping and produce
+// occasional wild overcounts — a 2025 release named "CyberCorp" listed at 15M
+// owners with 322 reviews, "War Robots: Frontiers" at 35M with 3082 reviews,
+// etc. Real Phenomenon-tier games have review-rates of 0.27–5.9% (p10–p99,
+// median 1.67%); a 0.05% rate is *5× lower* than the floor of any legitimate
+// tier and only catches obvious noise. We translate that into a minimum
+// review count per tier and recursively downgrade games that fall under the
+// floor for their tier. Drowned has no floor — that's where downgrades land.
+//
+// We change ONLY the tier classification; ownersMid stays the SteamSpy number
+// (labeled "estimate" in the UI), so the displayed owner count is honest
+// about what its source said while the tier reflects our own confidence.
+const TIER_REVIEW_FLOORS = {
+  phenomenon: 5000,
+  hit: 500,
+  modest: 50,
+  niche: 10,
+  drowned: 0,
+};
+const TIER_DOWNGRADE = ["phenomenon", "hit", "modest", "niche", "drowned"];
+
+function correctedTier(g) {
+  // Start from the SteamSpy-implied tier.
+  let tier;
+  if (g.ownersHigh <= 20_000) tier = "drowned";
+  else if (g.ownersMid <= 100_000) tier = "niche";
+  else if (g.ownersMid <= 1_000_000) tier = "modest";
+  else if (g.ownersMid <= 10_000_000) tier = "hit";
+  else tier = "phenomenon";
+
+  const reviews = (g.positive || 0) + (g.negative || 0);
+  while (tier !== "drowned" && reviews < TIER_REVIEW_FLOORS[tier]) {
+    tier = TIER_DOWNGRADE[TIER_DOWNGRADE.indexOf(tier) + 1];
+  }
+  return tier;
+}
+
 function isLikelyGame(r) {
   // Drop obvious non-games: soundtracks, demos, playtests, art books.
   const name = (r.Name || "").toLowerCase();
@@ -145,7 +184,7 @@ async function main() {
   console.log("Cleaning + parsing fields...");
   const today = new Date();
   const currentYear = today.getUTCFullYear();
-  const cleaned = raw
+  const cleanedAll = raw
     .filter(isLikelyGame)
     .map((r) => {
       const date = parseReleaseDate(r["Release date"]);
@@ -185,7 +224,30 @@ async function main() {
     .filter((g) => g.releaseYear >= 2003 && g.releaseYear <= currentYear)
     .filter((g) => g.ownersMid !== null);
 
-  console.log(`  ${cleaned.length} games after cleaning`);
+  // Compute the corrected tier once per game (review-floor adjustment) so
+  // every downstream analysis reads from the same classification.
+  for (const g of cleanedAll) g.tier = correctedTier(g);
+
+  // Dedup by (name, year): SteamSpy / Kaggle includes regional sub-store and
+  // tracking-only entries that share a base game's name+year. Worst observed
+  // case was "Shadow of the Tomb Raider: Definitive Edition" with 20 rows for
+  // 2018 — one real (2-5M owners, 79k reviews) and 19 ghosts (≤20k each, low
+  // review counts). For each (name, year) group we keep the row with the most
+  // reviews, which selects the real release in every case observed.
+  // True same-name same-year *different games* (rare) collapse to whichever
+  // happens to have more reviews — acceptable cost for dropping the noise.
+  const reviewCount = (g) => g.positive + g.negative;
+  const dedupMap = new Map();
+  for (const g of cleanedAll) {
+    const k = `${g.name}${g.releaseYear}`;
+    const prev = dedupMap.get(k);
+    if (!prev || reviewCount(prev) < reviewCount(g)) dedupMap.set(k, g);
+  }
+  const cleaned = [...dedupMap.values()];
+  const droppedDupes = cleanedAll.length - cleaned.length;
+
+  console.log(`  ${cleanedAll.length} games after cleaning`);
+  console.log(`  ${cleaned.length} games after (name, year) dedup — dropped ${droppedDupes} ghost duplicates`);
 
   await mkdir(DATA_OUT, { recursive: true });
 
@@ -557,23 +619,16 @@ async function main() {
     );
   }
 
-  // 14. Owner-bucket tier share by year — feeds Scene 1 (The Flood). Each game lands in
-  // exactly one of five tiers based on its SteamSpy owners estimate; per-year counts add
-  // up to that year's total releases. Drowned uses owners_high (the smallest-bucket check);
-  // the others use owners_mid.
+  // 14. Owner-bucket tier share by year — feeds Scene 1 (The Flood). Each game
+  // lands in exactly one of five tiers via correctedTier() (see top of file —
+  // SteamSpy bucket adjusted by the review-density floor). Per-year counts add
+  // up to that year's total releases.
   {
     const TIERS = ["drowned", "niche", "modest", "hit", "phenomenon"];
-    function ownerTier(g) {
-      if (g.ownersHigh <= 20_000) return "drowned";
-      if (g.ownersMid <= 100_000) return "niche";
-      if (g.ownersMid <= 1_000_000) return "modest";
-      if (g.ownersMid <= 10_000_000) return "hit";
-      return "phenomenon";
-    }
     const data = years.map((year) => {
       const games = byYear.get(year) || [];
       const counts = { drowned: 0, niche: 0, modest: 0, hit: 0, phenomenon: 0 };
-      for (const g of games) counts[ownerTier(g)]++;
+      for (const g of games) counts[g.tier]++;
       return { year, total: games.length, ...counts };
     });
     await emit(
@@ -635,37 +690,61 @@ async function main() {
   // (a `fields` header plus `rows` of value arrays) cuts JSON key overhead vs
   // an array-of-objects shape, since this file ships to every visitor of the
   // site — keeping it small matters more than ergonomics. The browser-side
-  // module reconstitutes objects from the rows on load.
-  function ownerTierFn(g) {
-    if (g.ownersHigh <= 20_000) return "drowned";
-    if (g.ownersMid <= 100_000) return "niche";
-    if (g.ownersMid <= 1_000_000) return "modest";
-    if (g.ownersMid <= 10_000_000) return "hit";
-    return "phenomenon";
-  }
+  // module reconstitutes objects from the rows on load. Tier is read from the
+  // precomputed g.tier (correctedTier(), with the review-density floor).
   {
     // Price intentionally omitted — the SteamSpy snapshot captures whatever the
     // price was at scrape time, including sales (Witcher 3 at $2.99, etc.), so
-    // displaying it as "the game's price" would be misleading. Per-cohort price
-    // tier distributions live in `price_tier_by_year.json` for any aggregate
-    // use case (e.g., the Scene 5 hypothetical-game simulator).
+    // displaying it as "the game's price" would be misleading.
+    // dateString is the parsed release date re-formatted as "MMM d, YYYY" so
+    // we can show e.g. "Oct 21, 2008" without re-parsing in the browser. Using
+    // d3.timeFormat for consistency with Steam's own display style.
+    const formatDate = d3.timeFormat("%b %-d, %Y");
     const fields = [
       "appId",
       "name",
       "year",
+      "dateString",
       "ownersMid",
       "tier",
       "isIndie",
       "genres",
+      "tags",
+      "positive",
+      "negative",
+      "avgPlaytimeMin",
+      "peakCcu",
+      "windows",
+      "mac",
+      "linux",
+      "developer",
     ];
     const rows = cleaned.map((g) => [
       g.appId,
       g.name,
       g.releaseYear,
+      g.date ? formatDate(g.date) : "",
       g.ownersMid,
-      ownerTierFn(g),
+      g.tier,
       g.genres.includes("Indie") ? 1 : 0,
       g.genres.slice(0, 3).join(","),
+      // Tags are listed in community-vote order in the source CSV. We ship
+      // the top 10 — the first 5 are usually displayed (chip strip), tags
+      // 6-10 power the filter dropdown so deeper-but-popular tags like
+      // "Open World" (typically rank ~6-10 within a game) become filterable.
+      // Joined with `|` so we can split safely — tag names never contain
+      // pipes but can contain commas (e.g., "Match 3").
+      g.tags.slice(0, 10).join("|"),
+      g.positive,
+      g.negative,
+      g.avgPlaytimeForever,
+      g.peakCcu,
+      g.windows ? 1 : 0,
+      g.mac ? 1 : 0,
+      g.linux ? 1 : 0,
+      // Developer is shipped verbatim — usually a single studio name, sometimes
+      // comma-separated co-developments. Rendered as one attribution line.
+      g.developers || "",
     ]);
     await writeFile(
       join(DATA_OUT, "game_dots.json"),
@@ -676,6 +755,66 @@ async function main() {
       `\`data/game_dots.json\` — ${fmtN(rows.length)} games in tabular format ` +
       `(\`fields\` + \`rows\`) with: ${fields.join(", ")}. ` +
       `Used by Find Your Game for autocomplete + cohort comparison.\n`,
+    );
+  }
+
+  // 17. Quality distribution by release year — feeds Scene 3 (Has Quality Held Up?).
+  // Two parallel signals per year:
+  //   - Steam positive ratio: Positive / (Positive + Negative), restricted to
+  //     games with ≥50 reviews. A 3-review game's ratio is too noisy to put in
+  //     a per-year distribution; the floor cuts that out.
+  //   - Metacritic score: only ~3.5% of games have one (critic-reviewed titles),
+  //     with strong selection bias toward games critics chose to cover. Kept as
+  //     a supplementary lens — its quantiles trend the same way as Steam's.
+  // Five quantiles per signal per year support a nested-band area chart.
+  {
+    const STEAM_MIN_REVIEWS = 50;
+    const quantile = (sorted, p) =>
+      sorted.length ? d3.quantile(sorted, p) : null;
+    const data = years.map((year) => {
+      const games = byYear.get(year) || [];
+      const steamSamples = games
+        .filter((g) => g.positive + g.negative >= STEAM_MIN_REVIEWS)
+        .map((g) => g.positive / (g.positive + g.negative))
+        .sort(d3.ascending);
+      const metaSamples = games
+        .filter((g) => g.metacritic > 0)
+        .map((g) => g.metacritic)
+        .sort(d3.ascending);
+      return {
+        year,
+        total: games.length,
+        n_steam: steamSamples.length,
+        steam_p10: quantile(steamSamples, 0.10),
+        steam_p25: quantile(steamSamples, 0.25),
+        steam_p50: quantile(steamSamples, 0.50),
+        steam_p75: quantile(steamSamples, 0.75),
+        steam_p90: quantile(steamSamples, 0.90),
+        n_meta: metaSamples.length,
+        meta_p10: quantile(metaSamples, 0.10),
+        meta_p25: quantile(metaSamples, 0.25),
+        meta_p50: quantile(metaSamples, 0.50),
+        meta_p75: quantile(metaSamples, 0.75),
+        meta_p90: quantile(metaSamples, 0.90),
+      };
+    });
+    await emit(
+      "quality_by_year.json",
+      data,
+      "17. Quality distribution by release year (Scene 3 source)",
+      ["year", "releases", "n ≥50 rev", "Steam p25 / p50 / p75", "n meta", "meta p25 / p50 / p75"],
+      data.map((r) => [
+        r.year,
+        fmtN(r.total),
+        fmtN(r.n_steam),
+        r.steam_p50 !== null
+          ? `${fmtPct(r.steam_p25)} / ${fmtPct(r.steam_p50)} / ${fmtPct(r.steam_p75)}`
+          : "—",
+        fmtN(r.n_meta),
+        r.meta_p50 !== null
+          ? `${r.meta_p25.toFixed(0)} / ${r.meta_p50.toFixed(0)} / ${r.meta_p75.toFixed(0)}`
+          : "—",
+      ]),
     );
   }
 
@@ -691,10 +830,11 @@ async function main() {
     `- Drop rate: **${fmtPct(1 - cleaned.length / raw.length)}**`,
     `- Year range: **${minYear}–${maxYear}**`,
     "",
-    "Eleven analyses below. Each is also serialized as a JSON file in `data/`",
-    "for the browser to fetch later. The first seven validate the original Flood",
-    "thesis (median collapse, indie flip, Pareto). The last four explore broader",
-    "trend candidates (platform support, localization, recent engagement, DLC).",
+    `${reportSections.length} analyses below. Each is also serialized as a JSON file in \`data/\``,
+    "for the browser to fetch later. Several feed specific scrollytelling scenes",
+    "(tier_share → Scene 1, genre_share → Scene 2, quality_by_year → Scene 3,",
+    "game_dots → Scene 4); the rest are exploratory checks on the original Flood",
+    "thesis and broader trend candidates.",
     "",
     "## Analyses",
     "",

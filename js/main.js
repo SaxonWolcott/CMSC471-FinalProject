@@ -2,8 +2,10 @@
 // off to its scene module. Scrollama wiring will land here as more scenes come
 // online.
 
+import { renderTierKey } from "./scenes/00-tier-key.js";
 import { renderFlood } from "./scenes/01-flood.js";
 import { renderIndieWave } from "./scenes/02-indie-wave.js";
+import { renderQuality } from "./scenes/03-quality.js";
 import { renderFindYourGame } from "./scenes/04-find-your-game.js";
 
 const log = (...args) => console.log("[main]", ...args);
@@ -24,6 +26,14 @@ async function main() {
   // sections can populate at any later moment without disrupting the
   // entrance animation.
   initScrollama();
+
+  // Tier-key preamble — no data fetch needed; the section reads from
+  // colors.js constants only.
+  const tierKeyHost = document.getElementById("scene-tier-key-viz");
+  if (tierKeyHost) {
+    renderTierKey(tierKeyHost);
+    log("Tier-key preamble rendered");
+  }
 
   const tierData = await loadJSON("./data/tier_share_by_year.json");
   log(`tier_share_by_year: ${tierData.length} years loaded`);
@@ -48,7 +58,13 @@ async function main() {
     log("Scene 2 (Indie Wave) rendered");
   }
 
-  // Scene 3 (Quality) is a placeholder for now — content lives in HTML.
+  const qualityHost = document.getElementById("scene-quality-viz");
+  if (qualityHost) {
+    const qualityData = await loadJSON("./data/quality_by_year.json");
+    log(`quality_by_year: ${qualityData.length} years loaded`);
+    renderQuality(qualityHost, qualityData);
+    log("Scene 3 (Quality) rendered");
+  }
 
   const findYourGameHost = document.getElementById("scene-find-your-game-viz");
   if (findYourGameHost) {

@@ -105,9 +105,10 @@ body.has-scrollama .scene.scene--in-view {
 }
 
 /* Children stagger inside the scene for a small cascade — title first,
-   then viz, then footnote — once the scene is in view. */
+   then viz, then takeaway, then footnote — once the scene is in view. */
 body.has-scrollama .scene .scene__intro,
 body.has-scrollama .scene .scene__viz,
+body.has-scrollama .scene .scene__takeaway,
 body.has-scrollama .scene .scene__footnote {
   opacity: 0;
   transform: translateY(16px);
@@ -126,10 +127,16 @@ body.has-scrollama .scene--in-view .scene__viz {
   transition-delay: 220ms;
 }
 
-body.has-scrollama .scene--in-view .scene__footnote {
+body.has-scrollama .scene--in-view .scene__takeaway {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 360ms;
+}
+
+body.has-scrollama .scene--in-view .scene__footnote {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 460ms;
 }
 
 .scene__intro {
@@ -160,6 +167,14 @@ body.has-scrollama .scene--in-view .scene__footnote {
   position: relative;
 }
 
+.scene__takeaway {
+  max-width: 720px;
+  margin: 1.75rem auto 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--fg);
+}
+
 .scene__footnote {
   max-width: 720px;
   margin: 1.5rem auto 0;
@@ -168,12 +183,67 @@ body.has-scrollama .scene--in-view .scene__footnote {
   font-style: italic;
 }
 
+/* ---------- Tier-key preamble (before Scene 1) ---------- */
+
+/* Container centers the SVG; SVG is sized intrinsically with preserveAspectRatio
+   meet so it scales down on narrow viewports without overflowing. */
+.tier-key {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0.5rem 1rem;
+}
+
+.tier-key svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.tier-key__circle {
+  /* Subtle outline keeps the dim Drowned circle visible against the panel
+     background; the brighter tiers don't need it but consistency wins. */
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1;
+}
+
+.tier-key__baseline {
+  stroke: rgba(199, 213, 224, 0.18);
+  stroke-width: 1;
+}
+
+.tier-key__name {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--fg-bright);
+}
+
+.tier-key__range {
+  font-family: inherit;
+  font-size: 11px;
+  fill: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---------- Scene 1: The Flood ---------- */
 
+.flood {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  column-gap: 1.5rem;
+  align-items: start;
+}
+
 .flood-controls {
+  grid-column: 1 / -1;
   display: flex;
   justify-content: flex-end;
   margin-bottom: 0.75rem;
+}
+
+.flood-chart {
+  grid-column: 1;
+  min-width: 0;
 }
 
 .flood-controls__group {
@@ -224,8 +294,9 @@ body.has-scrollama .scene--in-view .scene__footnote {
 }
 
 .flood-chart .axis-label {
-  font-size: 12px;
-  fill: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--muted-strong);
 }
 
 .flood-chart .annotation-label {
@@ -235,30 +306,41 @@ body.has-scrollama .scene--in-view .scene__footnote {
 }
 
 .flood-legend {
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
+  grid-column: 2;
+  align-self: start;
+  padding-top: 0.25rem;
 }
 
 .flood-legend__title {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--muted-strong);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .flood-legend__items {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
 }
 
 .flood-legend__item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: baseline;
+  column-gap: 0.55rem;
+  row-gap: 0.1rem;
   font-size: 0.85rem;
   color: var(--fg);
+}
+
+.flood-legend__item .flood-legend__swatch {
+  align-self: center;
+  grid-row: 1 / span 2;
+}
+
+.flood-legend__item .flood-legend__def {
+  grid-column: 2;
 }
 
 .flood-legend__swatch {
@@ -355,8 +437,9 @@ body.has-scrollama .scene--in-view .scene__footnote {
 }
 
 .indie-wave-chart .axis-label {
-  font-size: 12px;
-  fill: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--muted-strong);
 }
 
 .indie-wave-chart .indie-line {
@@ -418,6 +501,146 @@ body.has-scrollama .scene--in-view .scene__footnote {
 
 .indie-wave-tooltip__row-name.is-selected,
 .indie-wave-tooltip__row-value.is-selected {
+  color: var(--fg-bright);
+  font-weight: 700;
+}
+
+/* ---------- Scene 3: Has Quality Held Up? ---------- */
+
+.quality-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.quality-controls__group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quality-controls__label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-right: 0.25rem;
+}
+
+.quality-controls__btn {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--fg);
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.quality-controls__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.quality-controls__btn.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg-deep);
+}
+
+.quality-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.quality-chart .axis text {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-family: inherit;
+}
+
+.quality-chart .axis-label {
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--muted-strong);
+}
+
+.quality-chart .annotation-label {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-weight: 500;
+}
+
+.quality-chart .quality-band,
+.quality-chart .quality-line,
+.quality-chart .quality-line-area {
+  transition: d 600ms ease;
+}
+
+.quality-tooltip {
+  position: absolute;
+  z-index: 10;
+  max-width: 360px;
+  padding: 0.6rem 0.8rem;
+  background: var(--bg-deep);
+  color: var(--fg-bright);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.quality-tooltip[hidden] { display: none; }
+
+.quality-tooltip__title {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--fg-bright);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+.quality-tooltip__body {
+  color: var(--fg);
+}
+
+.quality-tooltip__body strong {
+  color: var(--fg-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.quality-tooltip__sub {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.quality-tooltip__rows {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.2rem 0.7rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+}
+
+.quality-tooltip__row-label {
+  color: var(--muted);
+}
+
+.quality-tooltip__row-value {
+  text-align: right;
+  color: var(--fg);
+}
+
+.quality-tooltip__row-label.is-median,
+.quality-tooltip__row-value.is-median {
   color: var(--fg-bright);
   font-weight: 700;
 }
@@ -566,32 +789,107 @@ body.has-scrollama .scene--in-view .scene__footnote {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(280px, 440px) 1fr;
+  /* The right column ("content") spans both rows so the header → stats stack
+     sits flush with no row-1 dead space when the image is taller than the
+     header text. The image is row 1 only; the narrative slots into row 2
+     directly under it. */
+  grid-template-areas:
+    "image     content"
+    "narrative content";
+  column-gap: 1.5rem;
+  row-gap: 1rem;
+  align-items: start;
+}
+
+.fyg-card__content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* Stretch to fill the spanned cell so the header sits at the top regardless
+     of how tall the image+narrative column is. Empty slack (if any) ends up
+     below the stats grid, which reads cleaner than a gap above it. */
+  align-self: stretch;
+}
+
+/* When the Steam image fails to load (onerror adds .is-hidden) the named
+   "image" area would otherwise sit empty; collapse to a single column so the
+   content takes the full width. */
+.fyg-card:has(.fyg-card__image.is-hidden) {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "content"
+    "narrative";
+}
+
+/* Narrow viewports stack the card vertically. Use display:contents on the
+   content wrapper so its children (header, stats) participate directly in
+   the card's grid — this lets the narrative slot between header and stats
+   in the natural reading order. */
+@media (max-width: 700px) {
+  .fyg-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "image"
+      "header"
+      "narrative"
+      "stats";
+  }
+  .fyg-card__content { display: contents; }
 }
 
 .fyg-card__image {
+  grid-area: image;
   display: block;
   width: 100%;
-  max-width: 460px;
   aspect-ratio: 460 / 215;
   object-fit: cover;
   border-radius: 6px;
-  margin: 0 auto 1rem;
+  align-self: start;
   background: var(--bg-elevated);
 }
 
 .fyg-card__image.is-hidden { display: none; }
 
 .fyg-card__header {
-  margin-bottom: 1rem;
+  grid-area: header;
   border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
 }
 
+.fyg-card__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
 .fyg-card__name {
-  margin: 0 0 0.25rem;
+  margin: 0;
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--fg-bright);
+}
+
+.fyg-card__store-link {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.fyg-card__store-link:hover {
+  background: rgba(102, 192, 244, 0.10);
+  border-color: var(--accent);
+  text-decoration: none;
 }
 
 .fyg-card__meta {
@@ -599,11 +897,48 @@ body.has-scrollama .scene--in-view .scene__footnote {
   color: var(--muted);
 }
 
+.fyg-card__credits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.fyg-card__developer {
+  color: var(--fg);
+}
+
+.fyg-platforms {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.fyg-platform {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: transparent;
+  opacity: 0.5;
+}
+
+.fyg-platform.is-supported {
+  color: var(--fg-bright);
+  background: rgba(102, 192, 244, 0.12);
+  border-color: rgba(102, 192, 244, 0.4);
+  opacity: 1;
+}
+
 .fyg-card__stats {
+  grid-area: stats;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  margin-bottom: 1.5rem;
 }
 
 .fyg-stat {
@@ -625,69 +960,587 @@ body.has-scrollama .scene--in-view .scene__footnote {
   color: var(--fg-bright);
 }
 
-.fyg-cohort { margin-top: 1rem; }
-
-.fyg-cohort__title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--muted-strong);
-  margin-bottom: 0.5rem;
-}
-
-.fyg-cohort__bar svg {
-  display: block;
-  width: 100%;
-}
-
-.fyg-cohort__legend {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.4rem 1rem;
-  margin-top: 0.75rem;
-}
-
-.fyg-cohort__legend-item {
-  display: grid;
-  grid-template-columns: 14px 1fr auto;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--fg);
-}
-
-.fyg-cohort__legend-item.is-selected {
-  font-weight: 700;
-  color: var(--fg-bright);
-}
-
-.fyg-cohort__legend-swatch {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.fyg-cohort__legend-count {
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-}
-
-/* ---------- Scene placeholders (3, 5) ---------- */
-
-.scene-placeholder {
-  text-align: center;
-  padding: 4rem 1rem;
+.fyg-stat__value--muted {
   color: var(--muted);
   font-style: italic;
 }
 
-.scene-placeholder strong {
-  display: block;
-  font-style: normal;
+/* Small colored square next to "Tier in 20XX" label — glance-readable cue
+   for which tier the picked game landed in (matches TIER_COLORS). */
+.fyg-stat__tier-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 0.35em;
+  vertical-align: -1px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Narrative callout — sits under the image and ties the picked game to the
+   broader Steam-history eras Scenes 1 and 3 already established. */
+.fyg-card__narrative {
+  grid-area: narrative;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  background: rgba(102, 192, 244, 0.06);
+  border: 1px solid rgba(102, 192, 244, 0.20);
+  align-self: start;
+}
+
+.fyg-card__narrative-era {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--accent);
-  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.fyg-card__narrative-stats {
+  color: var(--fg);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.fyg-card__narrative-stats strong {
+  color: var(--fg-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.fyg-card__narrative-sep {
+  color: var(--muted);
+  margin: 0 0.2rem;
+}
+
+/* Top community tags (chips below the card meta line). Compact pill shape,
+   non-interactive — they're context, not filters. */
+.fyg-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+}
+
+/* Tag chips render as <button>s now (clickable to drill into the scatter's
+   tag filter), so we strip the browser's default button affordances and
+   keep the original chip aesthetic, plus a hover state that signals
+   clickability. */
+.fyg-tag {
+  font-family: inherit;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(102, 192, 244, 0.10);
+  color: var(--fg);
+  border: 1px solid rgba(102, 192, 244, 0.20);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.fyg-tag:hover {
+  background: rgba(102, 192, 244, 0.22);
+  border-color: var(--accent);
+  color: var(--fg-bright);
+}
+
+/* Genres render inline within the meta line as buttons that look like
+   underlined text on hover. No background or border so they read as part
+   of the sentence "Feb 26, 2016 · Indie, RPG, Simulation". */
+.fyg-card__genre {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+.fyg-card__genre:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Steam-style review sentiment label + ratio bar.
+   Tones (positive-strong / positive / positive-soft / mixed / negative)
+   echo Steam's own colors: cyan-blue family for positive, amber for mixed,
+   muted red for negative. The thin bar underneath visualizes the actual
+   ratio so a "Mixed (65%)" doesn't read the same as a "Mixed (45%)". */
+.fyg-rating {
+  font-weight: 700;
+}
+
+.fyg-rating--positive-strong { color: #66c0f4; }
+.fyg-rating--positive        { color: #66c0f4; }
+.fyg-rating--positive-soft   { color: #b1d3e6; }
+.fyg-rating--mixed           { color: #f0a93f; }
+.fyg-rating--negative        { color: #d9534f; }
+.fyg-rating--muted           { color: var(--muted); }
+
+.fyg-rating__count {
+  color: var(--muted);
+  margin-left: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.fyg-rating-bar {
+  display: block;
+  margin-top: 0.35rem;
+  width: 100%;
+  max-width: 220px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(199, 213, 224, 0.15);
+  overflow: hidden;
+}
+
+.fyg-rating-bar__fill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  transition: width 200ms ease;
+}
+
+.fyg-rating-bar__fill--positive-strong { background: #66c0f4; }
+.fyg-rating-bar__fill--positive        { background: #66c0f4; }
+.fyg-rating-bar__fill--positive-soft   { background: #b1d3e6; }
+.fyg-rating-bar__fill--mixed           { background: #f0a93f; }
+.fyg-rating-bar__fill--negative        { background: #d9534f; }
+
+/* ---------- Scene 4: Cohort scatter (below the detail card) ---------- */
+
+.fyg-scatter {
+  position: relative;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.fyg-scatter__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 0.5rem;
+}
+
+.fyg-scatter__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted-strong);
+}
+
+.fyg-scatter__year-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition: opacity 120ms ease;
+}
+
+.fyg-scatter__year-label { margin-right: 0.1rem; }
+
+/* Disabled in all-years mode — keep visible but mute interactions. */
+.fyg-scatter__year-picker.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.fyg-scatter__year-select {
+  padding: 0.25rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--fg-bright);
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.fyg-scatter__year-select:hover,
+.fyg-scatter__year-select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.fyg-scatter__year-step {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: var(--fg-bright);
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+
+.fyg-scatter__year-step:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.fyg-scatter__year-step:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Two-pill view toggle — same style language as Scene 1's flood-controls. */
+.fyg-scatter__view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fyg-scatter__view-btn {
+  padding: 0.25rem 0.7rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--fg);
+  background: var(--bg-deep);
+  border: none;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.fyg-scatter__view-btn + .fyg-scatter__view-btn {
+  border-left: 1px solid var(--border-strong);
+}
+
+.fyg-scatter__view-btn:hover {
+  color: var(--accent);
+}
+
+.fyg-scatter__view-btn.is-active {
+  background: var(--accent);
+  color: var(--bg-deep);
+}
+
+.fyg-scatter__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fyg-scatter__filter-slot {
+  display: inline-flex;
+}
+
+/* Filter dropdown — used for both Genre and Tags. The button is the same
+   visual language as the year selector; the panel floats below with a
+   scrollable checkbox list and select-all/deselect-all controls. */
+.fyg-filter {
+  position: relative;
+}
+
+.fyg-filter__toggle {
+  padding: 0.25rem 0.65rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--fg-bright);
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.fyg-filter__toggle:hover,
+.fyg-filter__toggle:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.fyg-filter__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 12;
+  min-width: 220px;
+  max-width: 320px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  padding: 0.55rem;
+}
+
+.fyg-filter__panel[hidden] { display: none; }
+
+.fyg-filter__actions {
+  display: flex;
+  gap: 0.4rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.fyg-filter__action {
+  flex: 1;
+  padding: 0.2rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.fyg-filter__action:hover {
+  background: rgba(102, 192, 244, 0.1);
+  border-color: var(--accent);
+}
+
+.fyg-filter__search {
+  width: 100%;
+  margin-bottom: 0.4rem;
+  padding: 0.3rem 0.55rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--fg-bright);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.fyg-filter__search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(102, 192, 244, 0.18);
+}
+
+.fyg-filter__search::placeholder {
+  color: var(--muted);
+}
+
+.fyg-filter__options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+/* Row layout — label flexes to fill, "only" button sits at the right edge.
+   Row-level padding + hover bg lives here so the entire row (label + button)
+   shares the highlight. */
+.fyg-filter__options li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.25rem;
+  border-radius: 3px;
+}
+
+.fyg-filter__options li:hover {
+  background: rgba(102, 192, 244, 0.08);
+}
+
+.fyg-filter__option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 1;
+  min-width: 0;
+  font-size: 0.82rem;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.fyg-filter__options li:hover .fyg-filter__option {
+  color: var(--fg-bright);
+}
+
+.fyg-filter__option input {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* "Only" button per option — invisible until the row is hovered or focused,
+   then fades in to the right of the label. Click collapses the filter to
+   just this one option (same drill-in path the detail-card chips use). */
+.fyg-filter__only {
+  flex-shrink: 0;
+  padding: 0.05rem 0.45rem;
+  font-family: inherit;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.fyg-filter__options li:hover .fyg-filter__only,
+.fyg-filter__options li:focus-within .fyg-filter__only {
+  opacity: 1;
+}
+
+.fyg-filter__only:hover {
+  background: rgba(102, 192, 244, 0.18);
+  border-color: var(--accent);
+  color: var(--fg-bright);
+}
+
+.fyg-scatter__hint {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: right;
+  font-style: italic;
+}
+
+/* Mini-timeline strip above the scatter. 2004-2025 axis with Greenlight (2012)
+   and Direct (2017) annotations — same eras Scenes 1 and 3 anchor on, so the
+   timeline reads as a continuation. Highlight follows the currently-viewed
+   year; click anywhere to jump. */
+.fyg-scatter__timeline {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0 0.25rem;
+}
+
+.fyg-scatter__timeline svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.fyg-timeline__axis,
+.fyg-timeline__year-tick {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+.fyg-timeline__annotation-line {
+  stroke: rgba(199, 213, 224, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.fyg-timeline__annotation-label {
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--muted-strong);
+}
+
+.fyg-timeline__year-label {
+  font-family: inherit;
+  font-size: 10px;
+  fill: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fyg-timeline__highlight-bar {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.fyg-timeline__highlight-label {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--fg-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.fyg-timeline__overlay {
+  cursor: pointer;
+}
+
+.fyg-scatter__chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Darker plot area so dim Drowned dots have contrast against their background.
+   The surrounding panel keeps using --bg-elevated; only the chart inner area
+   drops to --bg-deep. */
+.fyg-scatter__plot-bg {
+  fill: var(--bg-deep);
+}
+
+.fyg-scatter__x-axis text {
+  font-size: 11px;
+  fill: var(--muted-strong);
+  font-family: inherit;
+}
+
+.fyg-scatter__y-label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.fyg-scatter__band-line {
+  stroke: rgba(199, 213, 224, 0.18);
+  stroke-width: 1;
+}
+
+/* Dots don't intercept events — the overlay rect catches mousemove/click and
+   uses a quadtree to find the nearest dot. Avoids 17k pointer-event handlers. */
+.fyg-scatter__dots circle {
+  pointer-events: none;
+}
+
+.fyg-scatter-tooltip {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  padding: 0.45rem 0.65rem;
+  background: var(--bg-deep);
+  color: var(--fg-bright);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  max-width: 320px;
+}
+
+.fyg-scatter-tooltip[hidden] { display: none; }
+
+.fyg-scatter-tooltip__name {
+  font-weight: 700;
+  color: var(--fg-bright);
+}
+
+.fyg-scatter-tooltip__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+.fyg-scatter-tooltip__swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* ---------- Footer ---------- */
