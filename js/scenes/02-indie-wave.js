@@ -30,6 +30,21 @@ const SELECTED_TEXT = "#ffffff";
 const MUTED_TEXT = "#8f98a0";
 const TRANSITION_MS = 320;
 
+// Emoji icon per genre — rendered as SVG <text> next to each right-edge
+// label. Trades pixel-perfect alignment for color: the emoji palette pops
+// against the dark panel where a 14px monochrome SVG glyph disappeared.
+// Selection state shifts the icon's opacity (not its color, since the
+// emoji's own palette is the appeal).
+const GENRE_ICONS = {
+  Indie: "💡",
+  Casual: "😊",
+  Action: "⚔️",
+  Adventure: "🧭",
+  Simulation: "⚙️",
+  RPG: "🛡️",
+  Strategy: "♟️",
+};
+
 export function renderIndieWave(container, data) {
   container.innerHTML = "";
   container.classList.add("indie-wave");
@@ -151,29 +166,55 @@ function createChart(host, tooltip, byYear) {
       .attr("d", lineGen);
   }
 
-  // Right-edge labels (clickable, double as legend).
+  // Right-edge labels (clickable, double as legend). Each label is a <g>
+  // containing the genre icon + name so the two move as one unit when the
+  // anti-overlap pass shifts crowded labels vertically.
   const labelGroup = g.append("g").attr("class", "line-labels");
+  const labelWraps = {};
   const labelTexts = {};
+  const labelIcons = {};
   for (const series of seriesByGenre) {
     const lastValue = series.points[series.points.length - 1].value;
-    labelTexts[series.genre] = labelGroup
+    const labelY = yScale(lastValue);
+
+    const wrap = labelGroup
+      .append("g")
+      .attr("class", "line-label-wrap")
+      .attr("data-genre", series.genre)
+      .attr("transform", `translate(${innerWidth + 8}, ${labelY})`)
+      .style("cursor", "pointer")
+      .on("click", () => select(series.genre));
+    labelWraps[series.genre] = wrap;
+
+    // Icon — SVG <text> containing the genre's emoji. Browser emoji fonts
+    // bring the color; we only animate opacity (selected vs muted) since
+    // re-fill on a color-emoji glyph isn't meaningful.
+    labelIcons[series.genre] = wrap
+      .append("text")
+      .attr("class", "line-label-icon")
+      .attr("data-genre", series.genre)
+      .attr("x", 0)
+      .attr("dy", "0.35em")
+      .attr("text-anchor", "start")
+      .style("font-size", "16px")
+      .style("opacity", 0.55)
+      .text(GENRE_ICONS[series.genre] || "");
+
+    labelTexts[series.genre] = wrap
       .append("text")
       .attr("class", "line-label")
       .attr("data-genre", series.genre)
-      .attr("x", innerWidth + 8)
-      .attr("y", yScale(lastValue))
+      .attr("x", 22)
       .attr("dy", "0.32em")
       .attr("text-anchor", "start")
-      .style("cursor", "pointer")
       .style("font-size", "12px")
       .style("fill", MUTED_TEXT)
-      .text(series.genre)
-      .on("click", () => select(series.genre));
+      .text(series.genre);
   }
 
   // Avoid label collisions: simple anti-overlap pass that nudges crowded
   // labels apart vertically while keeping their natural ordering.
-  resolveLabelOverlaps(seriesByGenre, labelTexts, yScale, innerHeight);
+  resolveLabelOverlaps(seriesByGenre, labelWraps, yScale, innerHeight, innerWidth);
 
   // Vertical focus line (drawn under the hover overlay so it doesn't intercept events).
   const focusLine = g
@@ -259,6 +300,11 @@ function createChart(host, tooltip, byYear) {
         .duration(TRANSITION_MS)
         .style("fill", isSelected ? SELECTED_TEXT : MUTED_TEXT)
         .style("font-weight", isSelected ? 700 : 400);
+
+      labelIcons[series.genre]
+        .transition()
+        .duration(TRANSITION_MS)
+        .style("opacity", isSelected ? 1 : 0.55);
     }
   }
 
@@ -318,7 +364,7 @@ function chartToScreen(host, anchorXInChart, anchorYInChart) {
 // y-position, then push labels apart that are too close together. Keeps
 // labels readable when several genres end up at similar shares (Action and
 // Adventure in 2025, for example).
-function resolveLabelOverlaps(seriesByGenre, labelTexts, yScale, innerHeight) {
+function resolveLabelOverlaps(seriesByGenre, labelWraps, yScale, innerHeight, innerWidth) {
   const minSpacing = 16;
   const placements = seriesByGenre
     .map((s) => {
@@ -338,6 +384,7 @@ function resolveLabelOverlaps(seriesByGenre, labelTexts, yScale, innerHeight) {
     for (const p of placements) p.y -= overflow;
   }
   for (const p of placements) {
-    labelTexts[p.genre].attr("y", p.y);
+    // Wrap holds icon+text; shifting transform moves both together.
+    labelWraps[p.genre].attr("transform", `translate(${innerWidth + 8}, ${p.y})`);
   }
 }

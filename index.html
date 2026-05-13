@@ -1,194 +1,227 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Steam, Over Time — CMSC471 Final Project</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Evolution of the Steam Library — CMSC471 Final Project</title>
 
-  <!-- Steam's actual Motiva Sans CSS, hot-linked from their CDN. May or may not
+    <!-- Steam's actual Motiva Sans CSS, hot-linked from their CDN. May or may not
        resolve cross-origin depending on Valve's headers; the Google fallback
        below covers either case. -->
-  <link rel="stylesheet" href="https://store.akamai.steamstatic.com/public/shared/css/motiva_sans.css" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://store.akamai.steamstatic.com/public/shared/css/motiva_sans.css"
+      crossorigin="anonymous"
+    />
 
-  <!-- Source Sans 3: open-source font that's visually closest to Motiva Sans;
+    <!-- Source Sans 3: open-source font that's visually closest to Motiva Sans;
        used whenever Motiva Sans isn't available. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="./css/styles.css" />
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://unpkg.com/scrollama"></script>
-</head>
-<body>
-  <header class="hero">
-    <h1>Steam, Over Time</h1>
-    <p class="hero__intro">
-      Steam launched in 2003 primarily as a way for Valve to provide updates
-      to their games. In the two decades since then, Steam has revolutionized
-      PC gaming and become the most successful game distributor in the world.
-      Let's take a look at how its library has evolved over time and what
-      kind of environment developers are facing today.
-    </p>
-  </header>
-
-  <main id="scenes">
-    <section class="scene" id="scene-tier-key">
-      <div class="scene__intro">
-        <h2 class="scene__title">Setting the scale</h2>
-        <p class="scene__lead">
-          Steam doesn't publish actual owner counts, so this project leans on
-          <strong>SteamSpy</strong> — a third-party service that estimates how
-          many people own each game. The estimates come in coarse ranges, so
-          every game lands in one of five owner-count buckets, shown below.
-          The rest of the page uses these colors and tier names everywhere.
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <header class="hero">
+      <!-- Faded mosaic of Steam header images spanning the eras the page
+           covers — 2004 classics through 2023 mega-hits. Hot-linked from the
+           Steam CDN by appId; onerror hides any thumbnail that 404s. -->
+      <div class="hero__mosaic" aria-hidden="true">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/220/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/240/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/440/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/620/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/72850/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/570/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1794680/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/header.jpg" alt="" onerror="this.style.visibility='hidden'" />
+      </div>
+      <div class="hero__content">
+        <h1>The Evolution of the Steam Library</h1>
+        <p class="hero__intro">
+          Steam launched in 2003 primarily as a way for Valve to provide updates
+          to their games. In the two decades since then, Steam has revolutionized
+          PC gaming and become the most successful game distributor in the world.
+          Let's take a look at how its library has evolved over time and what kind
+          of environment developers are facing today.
         </p>
       </div>
+    </header>
 
-      <div class="scene__viz" id="scene-tier-key-viz"></div>
+    <main id="scenes">
+      <section class="scene" id="scene-tier-key">
+        <div class="scene__intro">
+          <h2 class="scene__title">Setting the scale</h2>
+          <p class="scene__lead">
+            Steam doesn't publish actual owner counts, so this project leans on
+            <strong>SteamSpy</strong> — a third-party service that estimates how
+            many people own each game. The estimates come in coarse ranges, so
+            every game lands in one of five owner-count buckets, shown below.
+            The rest of the page uses these colors and tier names everywhere.
+          </p>
+        </div>
 
-      <p class="scene__footnote">
-        Each circle is twice the radius (four times the area) of the previous
-        tier — a compressed-but-readable proxy. The real ratios are even
-        larger: a typical Phenomenon-tier game reaches roughly six thousand
-        times the audience of a Drowned-tier one.
-      </p>
-    </section>
+        <div class="scene__viz" id="scene-tier-key-viz"></div>
 
-    <section class="scene" id="scene-flood">
-      <div class="scene__intro">
-        <h2 class="scene__title">1. The Flood</h2>
-        <p class="scene__lead">
-          In 2004, six games launched on Steam. In 2025, more than twenty-one
-          thousand did. The bars below stack every year's releases by how big
-          an audience each game found.
+        <p class="scene__footnote">
+          The circles convey relative scale but compress the actual
+          differences — a typical Phenomenon-tier game reaches roughly six
+          thousand times the audience of a Drowned-tier one.
         </p>
-      </div>
+      </section>
 
-      <div class="scene__viz" id="scene-flood-viz"></div>
+      <section class="scene" id="scene-flood">
+        <div class="scene__intro">
+          <h2 class="scene__title">1. The Flood</h2>
+          <p class="scene__lead">
+            In 2004, six games launched on Steam. In 2025, more than twenty-one
+            thousand did. The bars below stack every year's releases by how big
+            an audience each game found.
+          </p>
+        </div>
 
-      <p class="scene__takeaway">
-        Both the proportion and the raw number of Drowned games rose
-        dramatically in the years following Steam Greenlight in 2012, and
-        kept climbing after Steam Direct replaced it in 2017. The trend has
-        two likely drivers: better tools have made it possible for
-        less-experienced developers to ship complete games, and Valve's
-        progressively looser submission policies have let almost all of
-        those games onto the store.
-      </p>
+        <div class="scene__viz" id="scene-flood-viz"></div>
 
-      <p class="scene__footnote">
-        Owner counts are SteamSpy algorithmic estimates, not real sales figures,
-        and come bucketed in coarse ranges. The two rightmost years (2024 and
-        2025) are still accumulating owners — older games had over a decade to
-        find an audience, while a 2025 release has had less than one.
-      </p>
-    </section>
-
-    <section class="scene" id="scene-indie">
-      <div class="scene__intro">
-        <h2 class="scene__title">2. The Indie Wave</h2>
-        <p class="scene__lead">
-          In 2008, about one in six Steam releases were classified as
-          <strong>Indie</strong>. By 2018, more than three in four. Other
-          genres tell their own stories underneath — Action quietly shrank,
-          Casual and Adventure swelled. Click any genre on the right edge of
-          the chart to highlight its trajectory.
+        <p class="scene__takeaway">
+          Both the proportion and the raw number of Drowned games rose
+          dramatically in the years following Steam Greenlight in 2012, and kept
+          climbing after Steam Direct replaced it in 2017. The trend has two
+          likely drivers: better tools have made it possible for
+          less-experienced developers to ship complete games, and Valve's
+          progressively looser submission policies have let almost all of those
+          games onto the store.
         </p>
-      </div>
 
-      <div class="scene__viz" id="scene-indie-viz"></div>
-
-      <p class="scene__takeaway">
-        The meaning of the label "indie" has shifted dramatically since it
-        took hold. Today it stretches from <em>Undertale</em> — made almost
-        entirely by one person — to <em>Clair Obscur: Expedition 33</em>,
-        made by a 30-person studio that won Game of the Year. The same
-        accessibility that lets anyone start making a game also means the
-        catalog is more saturated than ever: a small indie project that
-        someone spent a year of their life on is likely to drown among
-        thousands of peers without a bit of luck.
-      </p>
-
-      <p class="scene__footnote">
-        These are Steam's publisher-set <em>genres</em> — distinct from the
-        community-applied <em>tags</em> the project uses as filters in
-        Section 4. Steam games typically carry multiple genres at once: a
-        single title might list Action, Indie, and Adventure simultaneously.
-        Each line shows the share of releases that <em>included</em> a given
-        genre, not an exclusive split. Lines can cross and don't sum to 100%.
-      </p>
-    </section>
-
-    <section class="scene" id="scene-quality">
-      <div class="scene__intro">
-        <h2 class="scene__title">3. Will anyone see your game?</h2>
-        <p class="scene__lead">
-          The first two scenes painted the catalog's growth in volume and
-          composition. But for a developer releasing a game, only half of
-          that picture matters — the other half is whether anyone ever sees
-          it. The line below tracks the share of each year's releases that
-          eventually accumulated <strong>50 Steam reviews</strong>: a low
-          bar, but a fair proxy for whether the discoverability machinery
-          surfaced the title at all. Toggle to <strong>Ratings</strong> to
-          see how the games that <em>did</em> find an audience are scored.
+        <p class="scene__footnote">
+          Owner counts are SteamSpy algorithmic estimates, not real sales
+          figures, and come bucketed in coarse ranges. The two rightmost years
+          (2024 and 2025) are still accumulating owners — older games had over a
+          decade to find an audience, while a 2025 release has had less than
+          one.
         </p>
-      </div>
+      </section>
 
-      <div class="scene__viz" id="scene-quality-viz"></div>
+      <section class="scene" id="scene-indie">
+        <div class="scene__intro">
+          <h2 class="scene__title">2. The Indie Wave</h2>
+          <p class="scene__lead">
+            In 2008, about one in six Steam releases were classified as
+            <strong>Indie</strong>. By 2018, more than three in four. Other
+            genres tell their own stories underneath — Action quietly shrank,
+            Casual and Adventure swelled. Click any genre on the right edge of
+            the chart to highlight its trajectory.
+          </p>
+        </div>
 
-      <p class="scene__takeaway">
-        In 2014, about 9 in 10 Steam releases eventually crossed 50 reviews.
-        By 2024, only about 1 in 5. Both Greenlight (2012) and especially
-        Steam Direct (2017) preceded sharp drops in this share — but the
-        cause isn't curation, it's volume. A 2024 release competed for
-        attention against ten times more titles than a 2014 release did,
-        and the audience didn't grow nearly as fast. That collapse is the
-        baseline a new developer should plan around: ratings, when a game
-        gets them, are still healthy — but most games don't get there.
-      </p>
+        <div class="scene__viz" id="scene-indie-viz"></div>
 
-      <p class="scene__footnote">
-        "Reaching 50 reviews" is a discoverability proxy — below that bar,
-        review ratios are noisy enough that quality signals aren't reliable.
-        2025 is excluded from the Discoverability view because games
-        released that year haven't had time to accumulate reviews; the 2023
-        and 2024 figures will still edge upward as more time passes.
-      </p>
-    </section>
-
-    <section class="scene" id="scene-find-your-game">
-      <div class="scene__intro">
-        <h2 class="scene__title">4. Find Your Game</h2>
-        <p class="scene__lead">
-          Pick a Steam game you remember and see where it fits in its
-          release-year cohort. Was it one of the eight phenomena from its
-          year, or one of the thousands swept under?
+        <p class="scene__takeaway">
+          The meaning of the label "indie" has shifted dramatically since it
+          took hold. Today it stretches from <em>Undertale</em> — made almost
+          entirely by one person — to <em>Clair Obscur: Expedition 33</em>, made
+          by a 30-person studio that won Game of the Year. The same
+          accessibility that lets anyone start making a game also means the
+          catalog is more saturated than ever: a small indie project that
+          someone spent a year of their life on is likely to drown among
+          thousands of peers without a bit of luck.
         </p>
-      </div>
 
-      <div class="scene__viz" id="scene-find-your-game-viz"></div>
+        <p class="scene__footnote">
+          These are Steam's publisher-set <em>genres</em> — distinct from the
+          community-applied <em>tags</em> the project uses as filters in Section
+          4. Steam games typically carry multiple genres at once: a single title
+          might list Action, Indie, and Adventure simultaneously. Each line
+          shows the share of releases that <em>included</em> a given genre, not
+          an exclusive split. Lines can cross and don't sum to 100%.
+        </p>
+      </section>
 
-      <p class="scene__footnote">
-        Search runs across roughly 113,500 cleaned Steam games. Owner counts
-        come from SteamSpy's bucketed estimates and may show "no estimate
-        available" for games SteamSpy can't measure. Cohort percentages are
-        computed against all games released in the same year.
+      <section class="scene" id="scene-quality">
+        <div class="scene__intro">
+          <h2 class="scene__title">3. Will anyone see your game?</h2>
+          <p class="scene__lead">
+            The first two scenes illustrated the catalog's growth in volume and
+            composition. But for a developer releasing a game, the most
+            important thing is whether anyone ever sees it. The line below
+            tracks the share of each year's releases that eventually accumulated
+            <strong>50 Steam reviews</strong>: a low bar, but a fair proxy for
+            whether the discoverability machinery surfaced the title at all.
+            Toggle to <strong>Ratings</strong> to see how the games that
+            <em>did</em> find an audience are scored.
+          </p>
+        </div>
+
+        <div class="scene__viz" id="scene-quality-viz"></div>
+
+        <p class="scene__takeaway">
+          In 2014, about 9 in 10 Steam releases eventually crossed 50 reviews.
+          By 2024, only about 1 in 5. Both Greenlight (2012) and especially
+          Steam Direct (2017) preceded sharp drops in this share — but the cause
+          isn't curation, it's volume. A 2024 release competed for attention
+          against ten times more titles than a 2014 release did, and the
+          audience didn't grow nearly as fast. This is an important factor for
+          any developer to consider. While good games are certainly more likely
+          to succeed, it's likely most games won't find any audience at all.
+        </p>
+
+        <p class="scene__footnote">
+          "Reaching 50 reviews" is a discoverability proxy — below that bar,
+          review ratios are noisy enough that quality signals aren't reliable.
+          2025 is excluded from the Discoverability view because games released
+          that year haven't had time to accumulate reviews; the 2023 and 2024
+          figures will still edge upward as more time passes.
+        </p>
+      </section>
+
+      <section class="scene" id="scene-find-your-game">
+        <div class="scene__intro">
+          <h2 class="scene__title">4. Find Your Game</h2>
+          <p class="scene__lead">
+            Pick a Steam game you remember and see where it fits in its
+            release-year cohort. Was it one of the eight phenomena from its
+            year, or one of the thousands swept under?
+          </p>
+        </div>
+
+        <div class="scene__viz" id="scene-find-your-game-viz"></div>
+
+        <p class="scene__footnote">
+          Search runs across roughly 113,500 cleaned Steam games. Owner counts
+          come from SteamSpy's bucketed estimates and may show "no estimate
+          available" for games SteamSpy can't measure. Cohort percentages are
+          computed against all games released in the same year.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Data:
+        <a
+          href="https://www.kaggle.com/datasets/fronkongames/steam-games-dataset"
+          >fronkongames/steam-games-dataset</a
+        >
+        (CC&nbsp;BY&nbsp;4.0), based on Steam &amp; SteamSpy. Built with
+        <a href="https://d3js.org/">D3.js</a>.
       </p>
-    </section>
-  </main>
+      <p>CMSC471, University of Maryland, Spring 2026 &mdash; Group 13.</p>
+    </footer>
 
-  <footer class="footer">
-    <p>
-      Data:
-      <a href="https://www.kaggle.com/datasets/fronkongames/steam-games-dataset">fronkongames/steam-games-dataset</a>
-      (CC&nbsp;BY&nbsp;4.0), based on Steam &amp; SteamSpy.
-      Built with <a href="https://d3js.org/">D3.js</a> and
-      <a href="https://github.com/russellsamora/scrollama">Scrollama</a>.
-    </p>
-    <p>CMSC471, University of Maryland, Spring 2026 &mdash; Group 13.</p>
-  </footer>
-
-  <script type="module" src="./js/main.js"></script>
-</body>
+    <script type="module" src="./js/main.js"></script>
+  </body>
 </html>

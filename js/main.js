@@ -11,7 +11,6 @@ import { renderFindYourGame } from "./scenes/04-find-your-game.js";
 const log = (...args) => console.log("[main]", ...args);
 
 log("d3 version:", typeof d3 !== "undefined" ? d3.version : "NOT LOADED");
-log("scrollama:", typeof scrollama !== "undefined" ? "loaded" : "NOT LOADED");
 
 async function loadJSON(path) {
   const r = await fetch(path);
@@ -20,13 +19,6 @@ async function loadJSON(path) {
 }
 
 async function main() {
-  // Initialize scrollytelling first so the hide/reveal class is in place
-  // before any scene renders. Scrollama tracks `.scene` elements, which
-  // exist in the HTML before any rendering happens; hosts inside those
-  // sections can populate at any later moment without disrupting the
-  // entrance animation.
-  initScrollama();
-
   // Tier-key preamble — no data fetch needed; the section reads from
   // colors.js constants only.
   const tierKeyHost = document.getElementById("scene-tier-key-viz");
@@ -73,30 +65,6 @@ async function main() {
     renderFindYourGame(findYourGameHost, games);
     log("Scene 4 (Find Your Game) rendered");
   }
-}
-
-// Scrollytelling: fade each scene up as its top crosses 70% of the viewport.
-// Gated on `body.has-scrollama` so the page degrades gracefully if scrollama
-// never loads — without that class, scenes are always visible regardless of
-// whether the entrance class fires.
-function initScrollama() {
-  if (typeof scrollama === "undefined") {
-    log("scrollama not loaded; skipping entrance animations");
-    return;
-  }
-  document.body.classList.add("has-scrollama");
-  const scroller = scrollama();
-  scroller
-    .setup({
-      step: ".scene",
-      offset: 0.7,
-      once: true,
-    })
-    .onStepEnter((response) => {
-      response.element.classList.add("scene--in-view");
-    });
-  window.addEventListener("resize", () => scroller.resize());
-  log(`scrollama wired up for ${document.querySelectorAll(".scene").length} scenes`);
 }
 
 main().catch((err) => {
