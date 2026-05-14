@@ -216,6 +216,28 @@ strong { color: var(--fg-bright); }
   filter: saturate(0.7) brightness(0.85);
 }
 
+/* Custom hover tooltip for the tier-key thumbnails — matches the Scene 4
+   scatter tooltip's visual language. */
+.tier-key__tooltip {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  padding: 0.45rem 0.7rem;
+  background: var(--bg-deep);
+  color: var(--fg-bright);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.tier-key__tooltip[hidden] {
+  display: none;
+}
+
 .tier-key__baseline {
   stroke: rgba(199, 213, 224, 0.18);
   stroke-width: 1;
@@ -1210,6 +1232,47 @@ strong { color: var(--fg-bright); }
   cursor: not-allowed;
 }
 
+/* Play/pause button — sits next to the year stepper, cycles years
+   automatically when active. Accent border distinguishes it from the
+   ◀/▶ step buttons so users don't mistake them for each other. */
+.fyg-scatter__play {
+  width: 28px;
+  height: 24px;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  line-height: 1;
+  color: var(--accent);
+  background: var(--bg-deep);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.fyg-scatter__play:hover:not(:disabled) {
+  background: rgba(102, 192, 244, 0.18);
+}
+
+.fyg-scatter__play.is-playing {
+  background: var(--accent);
+  color: var(--bg-deep);
+}
+
+.fyg-scatter__play.is-playing:hover {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+}
+
+.fyg-scatter__play:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 /* Two-pill view toggle — same style language as Scene 1's flood-controls. */
 .fyg-scatter__view-toggle {
   display: inline-flex;
@@ -1434,6 +1497,12 @@ strong { color: var(--fg-bright); }
   padding: 0 0.25rem;
 }
 
+/* All-years mode: hide the strip but keep its space so the chart doesn't
+   reflow when switching modes. */
+.fyg-scatter__timeline.is-hidden {
+  visibility: hidden;
+}
+
 .fyg-scatter__timeline svg {
   display: block;
   width: 100%;
@@ -1454,14 +1523,14 @@ strong { color: var(--fg-bright); }
 
 .fyg-timeline__annotation-label {
   font-family: inherit;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   fill: var(--muted-strong);
 }
 
 .fyg-timeline__year-label {
   font-family: inherit;
-  font-size: 10px;
+  font-size: 12px;
   fill: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -1473,7 +1542,7 @@ strong { color: var(--fg-bright); }
 
 .fyg-timeline__highlight-label {
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   fill: var(--fg-bright);
   font-variant-numeric: tabular-nums;

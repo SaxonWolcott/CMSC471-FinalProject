@@ -46,12 +46,12 @@ const TIER_RANGES = {
 //   - Pizza Tower: ~500k owners (Modest range upper)
 //   - Hollow Knight: ~5M owners (Hit)
 //   - CS2 / CS:GO: ~50M+ owners (Phenomenon)
-const TIER_EXAMPLE_APPID = {
+const TIER_EXAMPLE = {
   drowned: null,
-  niche: "839870",     // Wilmot's Warehouse
-  modest: "2231450",   // Pizza Tower
-  hit: "367520",       // Hollow Knight
-  phenomenon: "730",   // Counter-Strike 2 / GO
+  niche:      { appId: "839870",  name: "Wilmot's Warehouse", year: 2019 },
+  modest:     { appId: "2231450", name: "Pizza Tower",        year: 2023 },
+  hit:        { appId: "367520",  name: "Hollow Knight",      year: 2017 },
+  phenomenon: { appId: "730",     name: "Counter-Strike 2",   year: 2012 },
 };
 
 // Nine real Drowned-tier games (one per release year 2015-2025) shown as a
@@ -81,6 +81,33 @@ function steamHeaderUrl(appId) {
 export function renderTierKey(host) {
   host.innerHTML = "";
   host.classList.add("tier-key");
+
+  // Custom HTML tooltip — matches the visual language of Scene 4's scatter
+  // tooltip. Lives as a child of the host so absolute positioning is
+  // relative to it (the .scene__viz container is already position: relative).
+  const tooltip = document.createElement("div");
+  tooltip.className = "tier-key__tooltip";
+  tooltip.hidden = true;
+  host.appendChild(tooltip);
+
+  function showTooltip(rectEl, text) {
+    tooltip.textContent = text;
+    tooltip.hidden = false;
+    // Position above the rect, centered horizontally. getBoundingClientRect
+    // returns the rendered (post-scale) position so the tooltip lands right
+    // even when the SVG has been scaled to fit the container width.
+    const rectBox = rectEl.getBoundingClientRect();
+    const hostBox = host.getBoundingClientRect();
+    const x = rectBox.left + rectBox.width / 2 - hostBox.left;
+    const y = rectBox.top - hostBox.top - 8;
+    tooltip.style.left = `${x}px`;
+    tooltip.style.top = `${y}px`;
+    tooltip.style.transform = "translate(-50%, -100%)";
+  }
+
+  function hideTooltip() {
+    tooltip.hidden = true;
+  }
 
   const maxR = TIER_RADII.phenomenon;
   const padTop = 12;
@@ -200,8 +227,30 @@ export function renderTierKey(host) {
             .attr("clip-path", `url(#${tileClipId})`);
         }
       }
-    } else if (TIER_EXAMPLE_APPID[tier]) {
-      // Single uniform-size thumbnail with rounded corners.
+      // Transparent overlay rect over the 3x3 grid catches hovers and drives
+      // the custom HTML tooltip. Same pattern Scene 4's scatter uses for the
+      // dot hover-overlay — one rect, no per-element listeners.
+      const drownedOverlay = svg
+        .append("rect")
+        .attr("class", "tier-key__tooltip-overlay")
+        .attr("x", thumbX)
+        .attr("y", thumbY)
+        .attr("width", THUMB_W)
+        .attr("height", THUMB_H)
+        .attr("fill", "transparent")
+        .attr("rx", 4)
+        .attr("ry", 4)
+        .style("pointer-events", "all")
+        .style("cursor", "help");
+      drownedOverlay
+        .on("mouseenter", function () {
+          showTooltip(this, "Various games");
+        })
+        .on("mouseleave", hideTooltip);
+    } else if (TIER_EXAMPLE[tier]) {
+      // Single uniform-size thumbnail with rounded corners. A transparent
+      // overlay rect on top hosts the custom HTML tooltip on hover.
+      const example = TIER_EXAMPLE[tier];
       const clipId = `tier-key-thumb-clip-${tier}`;
       svg
         .append("clipPath")
@@ -216,13 +265,31 @@ export function renderTierKey(host) {
       svg
         .append("image")
         .attr("class", "tier-key__thumb")
-        .attr("href", steamHeaderUrl(TIER_EXAMPLE_APPID[tier]))
+        .attr("href", steamHeaderUrl(example.appId))
         .attr("x", thumbX)
         .attr("y", thumbY)
         .attr("width", THUMB_W)
         .attr("height", THUMB_H)
         .attr("preserveAspectRatio", "xMidYMid slice")
         .attr("clip-path", `url(#${clipId})`);
+      const overlay = svg
+        .append("rect")
+        .attr("class", "tier-key__tooltip-overlay")
+        .attr("x", thumbX)
+        .attr("y", thumbY)
+        .attr("width", THUMB_W)
+        .attr("height", THUMB_H)
+        .attr("fill", "transparent")
+        .attr("rx", 4)
+        .attr("ry", 4)
+        .style("pointer-events", "all")
+        .style("cursor", "help");
+      const tooltipText = `${example.name} (${example.year})`;
+      overlay
+        .on("mouseenter", function () {
+          showTooltip(this, tooltipText);
+        })
+        .on("mouseleave", hideTooltip);
     }
 
     cursor += slotW;

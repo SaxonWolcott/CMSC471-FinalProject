@@ -534,6 +534,7 @@ function createCohortScatter(host, gamesByYear, onPickGame) {
           <button type="button" class="fyg-scatter__year-step" data-step="prev" aria-label="Previous year">◀</button>
           <select class="fyg-scatter__year-select"></select>
           <button type="button" class="fyg-scatter__year-step" data-step="next" aria-label="Next year">▶</button>
+          <button type="button" class="fyg-scatter__play" aria-label="Play year cycle">⏵</button>
         </div>
         <div class="fyg-scatter__filter-slot" data-slot="genre"></div>
         <div class="fyg-scatter__filter-slot" data-slot="tags"></div>
@@ -551,6 +552,7 @@ function createCohortScatter(host, gamesByYear, onPickGame) {
   const yearPicker = host.querySelector(".fyg-scatter__year-picker");
   const prevBtn = host.querySelector('[data-step="prev"]');
   const nextBtn = host.querySelector('[data-step="next"]');
+  const playBtn = host.querySelector(".fyg-scatter__play");
   const viewBtns = host.querySelectorAll(".fyg-scatter__view-btn");
   const genreSlot = host.querySelector('[data-slot="genre"]');
   const tagSlot = host.querySelector('[data-slot="tags"]');
@@ -772,6 +774,59 @@ function createCohortScatter(host, gamesByYear, onPickGame) {
   let currentYear = null;
   let mode = "single"; // "single" | "all"
 
+  // Play-button auto-cycle: steps through years from current → newest, then
+  // jumps back to oldest. Each non-final year holds for 1.5s; the newest
+  // year (currently 2025) gets 3s before looping so the eye registers it as
+  // "the present day" before restarting the historical sweep.
+  const PLAY_INTERVAL_MS = 1500;
+  const PLAY_LAST_HOLD_MS = 3000;
+  let playing = false;
+  let playTimer = null;
+
+  function updatePlayBtn() {
+    playBtn.textContent = playing ? "⏸" : "⏵";
+    playBtn.setAttribute(
+      "aria-label",
+      playing ? "Pause year cycle" : "Play year cycle",
+    );
+    playBtn.classList.toggle("is-playing", playing);
+  }
+
+  function startPlaying() {
+    if (playing || mode !== "single") return;
+    playing = true;
+    updatePlayBtn();
+    scheduleNextStep();
+  }
+
+  function stopPlaying() {
+    if (!playing && !playTimer) return;
+    playing = false;
+    if (playTimer) {
+      clearTimeout(playTimer);
+      playTimer = null;
+    }
+    updatePlayBtn();
+  }
+
+  function scheduleNextStep() {
+    const maxYear = availableYears[0]; // sorted DESC → [0] is newest
+    const minYear = availableYears[availableYears.length - 1];
+    const isAtMax = currentYear === maxYear;
+    const delay = isAtMax ? PLAY_LAST_HOLD_MS : PLAY_INTERVAL_MS;
+    playTimer = setTimeout(() => {
+      if (!playing) return;
+      const next = isAtMax ? minYear : currentYear + 1;
+      setYear(next, true); // fromAutoPlay=true so we don't self-cancel
+      scheduleNextStep();
+    }, delay);
+  }
+
+  playBtn.addEventListener("click", () => {
+    if (playing) stopPlaying();
+    else startPlaying();
+  });
+
   function setMode(next) {
     if (next !== "single" && next !== "all") return;
     if (next === mode) return;
@@ -779,6 +834,9 @@ function createCohortScatter(host, gamesByYear, onPickGame) {
     for (const btn of viewBtns) {
       btn.classList.toggle("is-active", btn.dataset.view === mode);
     }
+    // Cycling through years is meaningless when all years are shown at
+    // once — stop the auto-cycle as the user switches to all-years.
+    if (mode === "all") stopPlaying();
     updateNavState();
     render();
   }
@@ -789,6 +847,12 @@ function createCohortScatter(host, gamesByYear, onPickGame) {
     const allYears = mode === "all";
     yearPicker.classList.toggle("is-disabled", allYears);
     yearSelect.disabled = allYears;
+    // Hide the timeline strip in all-years mode but keep its space — the
+    // strip's job is highlighting a specific year on the historical axis,
+    // which isn't meaningful when the scatter is showing all years at once.
+    // visibility:hidden preserves layout, so the chart below doesn't reflow.
+    timelineHost.classList.toggle("is-hidden", allYears);
+    playBtn.disabled = allYears;
     if (allYears) {
       prevBtn.disabled = true;
       nextBtn.disabled = true;
@@ -800,12 +864,15 @@ function createCohortScatter(host, gamesByYear, onPickGame) {
     prevBtn.disabled = idx >= availableYears.length - 1;
   }
 
-  function setYear(year) {
+  function setYear(year, fromAutoPlay = false) {
     // Picking a 2026 game (or any unsupported year) leaves the scatter where
     // it is — the selected highlight just won't show, since the picked game
     // isn't in the rendered cohort. Better than rendering an 84-dot wasteland.
     if (!supportedYearSet.has(year)) return;
     if (year === currentYear) return;
+    // Any manual year change (dropdown, prev/next, keyboard, timeline click,
+    // game pick) stops the auto-cycle — the user is taking control.
+    if (!fromAutoPlay && playing) stopPlaying();
     currentYear = year;
     if (yearSelect.value !== String(year)) yearSelect.value = String(year);
     updateNavState();
@@ -977,8 +1044,8 @@ function createTimeline(host, availableYears, onClickYear) {
   // already in the DOM by the time createTimeline runs.
   const hostRect = host.getBoundingClientRect();
   const width = Math.max(hostRect.width, 600);
-  const height = 60;
-  const margin = { top: 22, right: 28, bottom: 16, left: 28 };
+  const height = 72;
+  const margin = { top: 26, right: 28, bottom: 20, left: 28 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
