@@ -1,56 +1,41 @@
-# Steam, Over Time
+# The Evolution of the Steam Library
 
-CMSC471 Information Visualization final project, University of Maryland, Spring 2026.
-A scrollytelling visualization of how Steam's catalog has evolved across two decades —
-from a handful of Valve titles in 2004 to over 100,000 games today, with most of them
-reaching almost no audience.
+A scrollytelling visualization of how Steam's catalog has evolved across two decades.
+Designed to help developers identify trends and understand the environment they
+will be realeasing their games into.
 
 **Live demo:** https://saxonwolcott.github.io/CMSC471-FinalProject/
 
-## What it shows
+## Sections
 
-Five sections — three narrative scenes and two interactive capstones:
-
-1. **The Flood** — release counts per year, broken into five owner-count tiers. Watch
-   the smallest-bucket "Drowned" share grow from 4% in 2007 to 95% by 2025. Toggle between
-   *Proportions* (every bar 100%, read the tier mix) and *Counts* (bar height = total
-   releases, read the explosion).
-2. **The Indie Wave** — genre composition over time. Indie went from 17% of releases (2008)
-   to 77% (2018). Click any genre on the right edge of the chart to highlight its line;
-   hover anywhere to see every genre's value at that year.
-3. **Has Quality Held Up?** — Metacritic + review ratios over the catalog explosion.
-   *(In progress.)*
-4. **Find Your Game** — type a Steam game name and see where it sits in its release-year
-   cohort. Includes ~113,500 games (after filtering adult-content titles), Steam header
-   images pulled live from Valve's CDN, suggestion chips, and a 🎲 random pick button.
-5. **Test Your Hypothetical Game** — sliders for release year, price, indie / AAA, etc.,
-   with a verdict on where the resulting game would likely land. *(In progress.)*
+0. **Setting the Scale** — Defines the ownership count scale used for this project based on SteamSpy
+   estimates. "Drowned" represents the games with fewest owners, "Phenomenon" represents the games with
+   the most.
+1. **The Flood** — Shows the growing number of games that fail to find an audience.
+   can toggle between proportions and raw counts.
+2. **The Indie Wave** — Highlights the growing percentage of games classified in the "indie
+   genre.
+3. **Will anyone see your game?** — Switch between the number proportion of games getting
+   50+ reviews and average ratings of games with that achievement. Illustrates how game quality
+   is still good, but only for the few games that find an audience.
+4. **Find Your Game** — A search bar + graph to explore the trends for yourself. Type a name
+   into the search bar or hit random to get its info. Graph has filters, year timeline, and
+   autoplay. Games sorted by number of owners. Click on any game to get its info.
 
 ## Tech stack
 
-- Vanilla HTML, CSS, and JavaScript with native ES modules. No bundler, no build step.
-- D3.js v7 and Scrollama loaded from CDN.
+- Vanilla HTML, CSS, and JavaScript with native ES modules.
+- D3.js v7
 - Node.js with d3 (`scripts/build.js`) for the offline data pipeline. The browser only
   fetches small pre-aggregated JSONs.
 - Hosted on GitHub Pages directly from `main`.
 
-## Running locally
+## Data
 
-Serve the project root with any static file server:
+**Dataset:** [`fronkongames/steam-games-dataset`](https://www.kaggle.com/datasets/fronkongames/steam-games-dataset)
 
-```
-npx serve
-```
-
-Then open the URL the server reports (usually `http://localhost:3000`). Live Server in
-VS Code or `python -m http.server` work just as well.
-
-## Regenerating the data
-
-The data pipeline is offline; the browser only fetches the JSONs in `data/`.
-To rebuild from scratch you'll need the raw CSV from the
-[fronkongames Kaggle dataset](https://www.kaggle.com/datasets/fronkongames/steam-games-dataset),
-placed at `raw_data/games.csv` (gitignored — too large to commit).
+The data pipeline must be run locally; the browser only fetches the JSONs in `data/`.
+Place data in `raw_data/games.csv` (too large to commit).
 
 ```
 cd scripts
@@ -59,58 +44,50 @@ npm run build
 ```
 
 Outputs are written to `data/*.json` (committed, served to the browser) and a markdown
-summary to `phase0-report.md` at the project root.
+summary to `data-pipeline-report.md` at the project root.
 
-## Repo layout
+Dataset Caveats:
 
-```
-Final Project/
-├── index.html              # entry point
-├── css/styles.css          # Steam-themed dark stylesheet
-├── js/
-│   ├── main.js             # wires scrollama + each scene controller
-│   ├── lib/colors.js       # owner-tier palette
-│   └── scenes/             # one module per scene (01-flood, 02-indie-wave, …)
-├── data/                   # pre-aggregated JSONs (committed, fetched by browser)
-├── scripts/
-│   ├── build.js            # CSV → JSONs pipeline
-│   ├── inspect.js          # debug: CSV header bug
-│   └── inspect-tags.js     # debug: list-field delimiter
-├── phase0-report.md        # auto-generated data-validation report
-├── plan.md                 # design plan + status (gitignored)
-└── README.md               # this file
-```
+- Owner counts are SteamSpy algorithmic estimates.
+- Two parsing fixes, but both fixed by `scripts/build.js`:
+  1. the source CSV has a malformed header (missing comma `Discount` and `DLC count`)
+  2. `Genres` / `Tags` / `Categories` are comma-delimited rather than semicolon-delimited.
 
-## Data source & caveats
+## Group Info
 
-- **Dataset:** [`fronkongames/steam-games-dataset`](https://www.kaggle.com/datasets/fronkongames/steam-games-dataset)
-  on Kaggle (CC BY 4.0), based on the Steam Web API and SteamSpy estimates.
-- **Owner counts are SteamSpy algorithmic estimates**, not real sales figures, and come
-  bucketed in coarse ranges (the smallest bucket is 0–20,000 owners). Off-by-30–50% per
-  individual game is common; in aggregate the trends are reasonable.
-- **The dataset is a snapshot.** Older games have had more time to accumulate owners than
-  recent ones, so 2024–2025 cohorts are flagged on the chart with diagonal hatching as
-  "still accumulating."
-- **Two parsing fixes** worth knowing if you regenerate the pipeline: the source CSV has a
-  malformed header (39 columns vs 40 in data rows — a missing comma between `Discount` and
-  `DLC count`), and `Genres` / `Tags` / `Categories` are comma-delimited rather than
-  semicolon-delimited. Both fixes live in `scripts/build.js`.
+Group 13 Members:
 
-## Attribution
+1. Saxon Wolcott
+2. Pradham Rodda
+3. Yash Mohan
 
-- Data: SteamSpy and the fronkongames Kaggle dataset (CC BY 4.0). Attribution is also
-  present on the visualization itself, in the footer.
-- Built with [D3.js](https://d3js.org/) and
-  [Scrollama](https://github.com/russellsamora/scrollama).
-- "Steam" and the Motiva Sans typeface are properties of Valve Corporation. This is an
-  academic project, unaffiliated with Valve.
+## Team Collaboration
+
+The team collaborated on the overall project concept, dataset selection, visual direction, and review of the final app. Team members contributed in different ways across the project: Pradham and Yash were most involved in discussion, planning, design feedback, and review, while Saxon led the technical implementation and final integration.
+
+| Task / Project Area                                                               | Contributor(s)       |
+| --------------------------------------------------------------------------------- | -------------------- |
+| Project topic selection, dataset selection, and overall direction                 | Pradham, Yash, Saxon |
+| Initial discussion of the data story and key questions to explore                 | Pradham, Yash, Saxon |
+| Planning and design feedback for Visualization 1                                  | Pradham, Saxon       |
+| Planning and design feedback for Visualization 2                                  | Pradham, Saxon       |
+| Planning and design feedback for Visualization 3                                  | Yash, Saxon          |
+| Planning and design feedback for Visualization 4                                  | Yash, Saxon          |
+| Data cleaning, transformation, and preparation for use in the app                 | Saxon                |
+| D3.js implementation of the four visualizations                                   | Saxon                |
+| App layout, interaction logic, styling, and responsive page structure             | Saxon                |
+| Debugging, final integration, and deployment/submission preparation               | Saxon                |
+| Final review, feedback, and suggested changes to improve clarity and presentation | Pradham, Yash, Saxon |
+| README writing and final documentation                                            | Saxon                |
 
 ## AI usage
 
-This project was developed with extensive use of Claude (Anthropic) as a pair programmer.
-A working log of which prompts produced which parts is kept in `docs/ai-usage.md` (in
-progress).
+This project was developed with extensive use of Claude Code (Anthropic) as a pair programmer. `CLAUDE.md`
+and `plan.md` (a living document evolving from initial setup prompt) are visible in the project root.
 
-## Team
+## References
 
-CMSC471 Spring 2026 — Group 13.
+Given to Claude Code:
+
+- https://www.washingtonpost.com/graphics/2020/world/corona-simulator/
+- https://mbtaviz.github.io/
